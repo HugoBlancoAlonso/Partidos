@@ -1,0 +1,45 @@
+.circular-progress {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.circular-progress svg {
+  transform: rotate(-90deg);
+}
+
+.circular-progress__bg {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.06);
+}
+
+.circular-progress__bar {
+  fill: none;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  filter: drop-shadow(0 0 6px rgba(74, 222, 128, 0.3));
+}
+
+.circular-progress__text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: baseline;
+  gap: 1px;
+}
+
+.circular-progress__percentage {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.5px;
+}
+
+.circular-progress__symbol {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+}

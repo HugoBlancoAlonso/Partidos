@@ -1,0 +1,203 @@
+.login {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-md);
+  position: relative;
+  overflow: hidden;
+  background: var(--gradient-main);
+}
+
+/* Background glows */
+.login__bg-glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+.login__bg-glow--1 {
+  width: 300px;
+  height: 300px;
+  background: var(--accent-gold);
+  top: -100px;
+  right: -80px;
+  opacity: 0.12;
+}
+
+.login__bg-glow--2 {
+  width: 250px;
+  height: 250px;
+  background: var(--accent-green);
+  bottom: -80px;
+  left: -60px;
+  opacity: 0.1;
+}
+
+/* Container */
+.login__container {
+  width: 100%;
+  max-width: 400px;
+  background: var(--bg-glass);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-xl);
+  padding: var(--space-xl) var(--space-lg);
+  box-shadow: var(--shadow-lg);
+}
+
+/* Header */
+.login__header {
+  text-align: center;
+  margin-bottom: var(--space-xl);
+}
+
+.login__emoji {
+  font-size: 3rem;
+  display: block;
+  margin-bottom: var(--space-sm);
+  animation: scaleIn 0.5s ease both;
+}
+
+.login__title {
+  font-size: var(--fs-2xl);
+  font-weight: 800;
+  background: var(--gradient-gold);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -0.5px;
+  margin-bottom: var(--space-xs);
+}
+
+.login__subtitle {
+  font-size: var(--fs-lg);
+  letter-spacing: 4px;
+  margin-bottom: var(--space-sm);
+}
+
+.login__desc {
+  font-size: var(--fs-sm);
+  color: var(--text-secondary);
+}
+
+/* Form */
+.login__form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.login__field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.login__label {
+  font-size: var(--fs-sm);
+  font-weight: 500;
+  color: var(--text-secondary);
+  padding-left: 2px;
+}
+
+.login__input {
+  width: 100%;
+  padding: 14px 16px;
+  background: var(--bg-input);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  font-size: var(--fs-base);
+  transition: all var(--transition-base);
+}
+
+.login__input:focus {
+  background: var(--bg-input-focus);
+  border-color: var(--accent-gold);
+  box-shadow: 0 0 0 3px rgba(196, 168, 79, 0.1);
+}
+
+.login__input::placeholder {
+  color: var(--text-muted);
+}
+
+/* Error */
+.login__error {
+  padding: 10px 14px;
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  border-radius: var(--radius-sm);
+  color: var(--accent-red);
+  font-size: var(--fs-sm);
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  animation: fadeIn 0.2s ease;
+}
+
+/* Button */
+.login__button {
+  width: 100%;
+  padding: 14px;
+  border-radius: var(--radius-md);
+  font-size: var(--fs-base);
+  font-weight: 600;
+  transition: all var(--transition-base);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+}
+
+.login__button--primary {
+  background: var(--gradient-gold);
+  color: #1a1a2e;
+}
+
+.login__button--primary:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-gold);
+}
+
+.login__button--primary:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.login__button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* Switch */
+.login__switch {
+  margin-top: var(--space-lg);
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xs);
+}
+
+.login__switch-text {
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+}
+
+.login__switch-btn {
+  background: none;
+  color: var(--accent-gold);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  padding: 4px 8px;
+  border-radius: var(--radius-sm);
+  transition: all var(--transition-fast);
+}
+
+.login__switch-btn:hover {
+  background: rgba(196, 168, 79, 0.1);
+}

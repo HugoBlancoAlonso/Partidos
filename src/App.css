@@ -1,0 +1,20 @@
+.app-loading {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--gradient-main);
+}
+
+.app-loading__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-lg);
+}
+
+.app-loading__emoji {
+  font-size: 3rem;
+  animation: pulse 1.5s ease-in-out infinite;
+}
