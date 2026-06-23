@@ -13,12 +13,13 @@
 }
 
 .match-card--watched {
-  border-color: rgba(74, 222, 128, 0.15);
-  background: rgba(74, 222, 128, 0.04);
+  border-color: rgba(48, 209, 88, 0.3);
+  background: var(--bg-card);
 }
 
 .match-card--watched:hover {
-  background: rgba(74, 222, 128, 0.08);
+  background: var(--bg-card-hover);
+  border-color: rgba(48, 209, 88, 0.5);
 }
 
 /* Main row */
@@ -109,7 +110,7 @@
 }
 
 .match-card__switch--on {
-  background: #34C759;
+  background: #30d158;
 }
 
 .match-card__switch-knob {

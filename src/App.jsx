@@ -16,6 +16,19 @@ function App() {
   const [view, setView] = useState('menu'); // 'menu' | 'matches'
   const [sessionLoading, setSessionLoading] = useState(true);
 
+  const [theme, setTheme] = useState(() => {
+    return localStorage.getItem('app-theme') || 'dark';
+  });
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('app-theme', theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme(prev => (prev === 'dark' ? 'light' : 'dark'));
+  };
+
   const { watchedCount, isWatched, toggleWatched, loading: watchedLoading } = useWatchedMatches(user?.id);
 
   // Verificar sesión existente al cargar
@@ -92,6 +105,8 @@ function App() {
         isWatched={isWatched}
         onToggleWatched={toggleWatched}
         onBack={() => setView('menu')}
+        theme={theme}
+        onToggleTheme={toggleTheme}
       />
     );
   }
@@ -104,6 +119,8 @@ function App() {
       totalMatches={TOTAL_MATCHES}
       onSelectTournament={() => setView('matches')}
       onLogout={handleLogout}
+      theme={theme}
+      onToggleTheme={toggleTheme}
     />
   );
 }

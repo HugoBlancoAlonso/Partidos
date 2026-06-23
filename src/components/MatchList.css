@@ -14,10 +14,10 @@
   align-items: center;
   gap: var(--space-md);
   padding: var(--space-md);
-  background: rgba(10, 10, 26, 0.85);
+  background: rgba(18, 18, 20, 0.85);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  border-bottom: 1px solid var(--bg-card-border);
 }
 
 .match-list__back {
@@ -45,10 +45,7 @@
 .match-list__title {
   font-size: var(--fs-md);
   font-weight: 700;
-  background: var(--gradient-gold);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: var(--text-primary);
 }
 
 .match-list__subtitle {

@@ -8,43 +8,44 @@
 }
 
 /* --- CSS Variables --- */
-:root {
-  /* Colors */
-  --bg-primary: #0a0a1a;
-  --bg-secondary: #12122a;
-  --bg-card: rgba(255, 255, 255, 0.04);
-  --bg-card-hover: rgba(255, 255, 255, 0.08);
-  --bg-card-border: rgba(255, 255, 255, 0.08);
-  --bg-glass: rgba(255, 255, 255, 0.06);
-  --bg-glass-strong: rgba(255, 255, 255, 0.1);
-  --bg-input: rgba(255, 255, 255, 0.06);
-  --bg-input-focus: rgba(255, 255, 255, 0.1);
+:root, [data-theme="dark"] {
+  /* Colors - iOS Dark Mode */
+  --bg-primary: #121214;
+  --bg-secondary: #121214;
+  --bg-card: #1c1c1e;
+  --bg-card-hover: #2c2c2e;
+  --bg-card-border: rgba(255, 255, 255, 0.1);
+  --bg-glass: rgba(28, 28, 30, 0.85);
+  --bg-glass-strong: rgba(28, 28, 30, 0.95);
+  --bg-input: #1c1c1e;
+  --bg-input-focus: #2c2c2e;
 
-  --accent-gold: #c4a84f;
-  --accent-gold-light: #dfc87a;
-  --accent-gold-dark: #a08030;
-  --accent-green: #4ade80;
-  --accent-green-dark: #22c55e;
-  --accent-red: #ef4444;
-  --accent-blue: #60a5fa;
+  --accent-gold: #ffffff;
+  --accent-gold-light: #ebebf5;
+  --accent-gold-dark: #98989d;
+  --accent-green: #30d158;
+  --accent-green-dark: #24a144;
+  --accent-red: #ff453a;
+  --accent-blue: #0a84ff;
 
   --text-primary: #ffffff;
-  --text-secondary: #a0a0b8;
-  --text-muted: #6b6b80;
-  --text-accent: #c4a84f;
+  --text-secondary: rgba(235, 235, 245, 0.6);
+  --text-muted: rgba(235, 235, 245, 0.3);
+  --text-accent: #ffffff;
 
-  --gradient-main: linear-gradient(135deg, #0a0a1a 0%, #1a1a3e 50%, #0a0a1a 100%);
-  --gradient-gold: linear-gradient(135deg, #c4a84f, #dfc87a);
-  --gradient-green: linear-gradient(135deg, #22c55e, #4ade80);
-  --gradient-card: linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+  --gradient-main: #121214;
+  --gradient-gold: #ffffff;
+  --gradient-green: #30d158;
+  --gradient-card: #1c1c1e;
 
   /* Shadows */
-  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
-  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.4);
-  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.5);
-  --shadow-gold: 0 0 20px rgba(196, 168, 79, 0.15);
-  --shadow-green: 0 0 20px rgba(74, 222, 128, 0.15);
-
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.5);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+  --shadow-gold: none;
+  --shadow-green: none;
+}
+:root {
   /* Typography */
   --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   --fs-xs: 0.7rem;

@@ -1,7 +1,7 @@
 import CircularProgress from './CircularProgress';
 import './Menu.css';
 
-export default function Menu({ username, watchedCount, totalMatches, onSelectTournament, onLogout }) {
+export default function Menu({ username, watchedCount, totalMatches, onSelectTournament, onLogout, theme, onToggleTheme }) {
   const percentage = totalMatches > 0 ? (watchedCount / totalMatches) * 100 : 0;
 
   return (
@@ -17,13 +17,15 @@ export default function Menu({ username, watchedCount, totalMatches, onSelectTou
             <h2 className="menu__username">{username}</h2>
           </div>
         </div>
-        <button className="menu__logout" onClick={onLogout} title="Cerrar sesión">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
-            <polyline points="16 17 21 12 16 7" />
-            <line x1="21" y1="12" x2="9" y2="12" />
-          </svg>
-        </button>
+        <div style={{ display: 'flex', gap: '8px' }}>
+          <button className="menu__logout" onClick={onLogout} title="Cerrar sesión">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+              <polyline points="16 17 21 12 16 7" />
+              <line x1="21" y1="12" x2="9" y2="12" />
+            </svg>
+          </button>
+        </div>
       </header>
 
       <div className="menu__content">

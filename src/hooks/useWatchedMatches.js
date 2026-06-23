@@ -29,10 +29,13 @@ export function useWatchedMatches(userId) {
         const email = authUser?.user?.email || '';
         const username = email.split('@')[0] || 'usuario';
 
-        await supabase.from('profiles').insert({
+        const { error: insertError } = await supabase.from('profiles').insert({
           id: userId,
           username: username,
         });
+        if (insertError) {
+          alert(`Error creando perfil: ${insertError.message}`);
+        }
       }
       profileChecked.current = true;
     }

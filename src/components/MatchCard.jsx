@@ -20,8 +20,16 @@ export default function MatchCard({ match, isWatched, onToggleWatched }) {
     });
   };
 
+  // Comprobar si el partido ya se ha jugado (hora España UTC+2)
+  const matchDateStr = `${match.fecha}T${match.hora_espana}:00+02:00`;
+  const hasPassed = new Date() >= new Date(matchDateStr);
+
   const handleToggle = (e) => {
     e.stopPropagation();
+    if (!hasPassed) {
+      alert('¡Este partido todavía no se ha jugado! ⏳');
+      return;
+    }
     onToggleWatched(match.id_partido);
   };
 
@@ -70,9 +78,10 @@ export default function MatchCard({ match, isWatched, onToggleWatched }) {
         <button
           className={`match-card__switch ${isWatched ? 'match-card__switch--on' : ''}`}
           onClick={handleToggle}
-          title={isWatched ? 'Marcar como no visto' : 'Marcar como visto'}
+          title={!hasPassed ? 'Aún no se ha jugado' : (isWatched ? 'Marcar como no visto' : 'Marcar como visto')}
           role="switch"
           aria-checked={isWatched}
+          disabled={!hasPassed}
         >
           <span className="match-card__switch-knob" />
         </button>
