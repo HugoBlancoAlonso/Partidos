@@ -567,7 +567,7 @@
                     "equipo_local": "Panamá",
                     "equipo_visitante": "Croacia",
                     "fecha": "2026-06-24",
-                    "hora_espana": "03:00",
+                    "hora_espana": "01:00",
                     "estadio": "BMO Field",
                     "ciudad": "Toronto"
                 },
@@ -579,7 +579,7 @@
                     "equipo_local": "Colombia",
                     "equipo_visitante": "RD Congo",
                     "fecha": "2026-06-24",
-                    "hora_espana": "06:00",
+                    "hora_espana": "04:00",
                     "estadio": "Estadio Akron",
                     "ciudad": "Guadalajara"
                 }
@@ -592,8 +592,8 @@
                     "detalle_fase": "Grupo C",
                     "equipo_local": "Escocia",
                     "equipo_visitante": "Brasil",
-                    "fecha": "2026-06-24",
-                    "hora_espana": "20:00",
+                    "fecha": "2026-06-25",
+                    "hora_espana": "00:00",
                     "estadio": "Hard Rock Stadium",
                     "ciudad": "Miami"
                 },
@@ -604,8 +604,8 @@
                     "detalle_fase": "Grupo C",
                     "equipo_local": "Marruecos",
                     "equipo_visitante": "Haití",
-                    "fecha": "2026-06-24",
-                    "hora_espana": "20:00",
+                    "fecha": "2026-06-25",
+                    "hora_espana": "00:00",
                     "estadio": "Mercedes-Benz Stadium",
                     "ciudad": "Atlanta"
                 },
@@ -617,7 +617,7 @@
                     "equipo_local": "Suiza",
                     "equipo_visitante": "Canadá",
                     "fecha": "2026-06-24",
-                    "hora_espana": "23:00",
+                    "hora_espana": "21:00",
                     "estadio": "BC Place",
                     "ciudad": "Vancouver"
                 },
@@ -629,7 +629,7 @@
                     "equipo_local": "Bosnia y Herzegovina",
                     "equipo_visitante": "Catar",
                     "fecha": "2026-06-24",
-                    "hora_espana": "23:00",
+                    "hora_espana": "21:00",
                     "estadio": "Lumen Field",
                     "ciudad": "Seattle"
                 },
@@ -641,7 +641,7 @@
                     "equipo_local": "República Checa",
                     "equipo_visitante": "México",
                     "fecha": "2026-06-25",
-                    "hora_espana": "02:00",
+                    "hora_espana": "03:00",
                     "estadio": "Estadio Azteca",
                     "ciudad": "Ciudad de México"
                 },
@@ -653,7 +653,7 @@
                     "equipo_local": "Sudáfrica",
                     "equipo_visitante": "Corea del Sur",
                     "fecha": "2026-06-25",
-                    "hora_espana": "02:00",
+                    "hora_espana": "03:00",
                     "estadio": "Estadio Akron",
                     "ciudad": "Guadalajara"
                 },
@@ -665,7 +665,7 @@
                     "equipo_local": "Ecuador",
                     "equipo_visitante": "Alemania",
                     "fecha": "2026-06-25",
-                    "hora_espana": "20:00",
+                    "hora_espana": "22:00",
                     "estadio": "Lincoln Financial Field",
                     "ciudad": "Filadelfia"
                 },
@@ -677,7 +677,7 @@
                     "equipo_local": "Curazao",
                     "equipo_visitante": "Costa de Marfil",
                     "fecha": "2026-06-25",
-                    "hora_espana": "20:00",
+                    "hora_espana": "22:00",
                     "estadio": "BMO Field",
                     "ciudad": "Toronto"
                 },
@@ -688,8 +688,8 @@
                     "detalle_fase": "Grupo F",
                     "equipo_local": "Túnez",
                     "equipo_visitante": "Países Bajos",
-                    "fecha": "2026-06-25",
-                    "hora_espana": "23:00",
+                    "fecha": "2026-06-26",
+                    "hora_espana": "01:00",
                     "estadio": "Arrowhead Stadium",
                     "ciudad": "Kansas City"
                 },
@@ -700,8 +700,8 @@
                     "detalle_fase": "Grupo F",
                     "equipo_local": "Japón",
                     "equipo_visitante": "Suecia",
-                    "fecha": "2026-06-25",
-                    "hora_espana": "23:00",
+                    "fecha": "2026-06-26",
+                    "hora_espana": "01:00",
                     "estadio": "Estadio BBVA",
                     "ciudad": "Monterrey"
                 },
@@ -713,7 +713,7 @@
                     "equipo_local": "Turquía",
                     "equipo_visitante": "Estados Unidos",
                     "fecha": "2026-06-26",
-                    "hora_espana": "02:00",
+                    "hora_espana": "04:00",
                     "estadio": "SoFi Stadium",
                     "ciudad": "Los Ángeles"
                 },
@@ -725,7 +725,7 @@
                     "equipo_local": "Paraguay",
                     "equipo_visitante": "Australia",
                     "fecha": "2026-06-26",
-                    "hora_espana": "02:00",
+                    "hora_espana": "04:00",
                     "estadio": "Levi's Stadium",
                     "ciudad": "San Francisco"
                 },
@@ -737,7 +737,7 @@
                     "equipo_local": "Noruega",
                     "equipo_visitante": "Francia",
                     "fecha": "2026-06-26",
-                    "hora_espana": "20:00",
+                    "hora_espana": "21:00",
                     "estadio": "Gillette Stadium",
                     "ciudad": "Boston"
                 },
@@ -749,7 +749,7 @@
                     "equipo_local": "Senegal",
                     "equipo_visitante": "Irak",
                     "fecha": "2026-06-26",
-                    "hora_espana": "20:00",
+                    "hora_espana": "21:00",
                     "estadio": "BMO Field",
                     "ciudad": "Toronto"
                 },
@@ -760,8 +760,8 @@
                     "detalle_fase": "Grupo G",
                     "equipo_local": "Nueva Zelanda",
                     "equipo_visitante": "Bélgica",
-                    "fecha": "2026-06-26",
-                    "hora_espana": "23:00",
+                    "fecha": "2026-06-27",
+                    "hora_espana": "05:00",
                     "estadio": "SoFi Stadium",
                     "ciudad": "Los Ángeles"
                 },
@@ -772,8 +772,8 @@
                     "detalle_fase": "Grupo G",
                     "equipo_local": "Egipto",
                     "equipo_visitante": "Irán",
-                    "fecha": "2026-06-26",
-                    "hora_espana": "23:00",
+                    "fecha": "2026-06-27",
+                    "hora_espana": "05:00",
                     "estadio": "Lumen Field",
                     "ciudad": "Seattle"
                 },
@@ -809,7 +809,7 @@
                     "equipo_local": "Panamá",
                     "equipo_visitante": "Inglaterra",
                     "fecha": "2026-06-27",
-                    "hora_espana": "20:00",
+                    "hora_espana": "23:00",
                     "estadio": "Lincoln Financial Field",
                     "ciudad": "Filadelfia"
                 },
@@ -821,7 +821,7 @@
                     "equipo_local": "Croacia",
                     "equipo_visitante": "Ghana",
                     "fecha": "2026-06-27",
-                    "hora_espana": "20:00",
+                    "hora_espana": "23:00",
                     "estadio": "MetLife Stadium",
                     "ciudad": "Nueva York"
                 },
@@ -832,8 +832,8 @@
                     "detalle_fase": "Grupo J",
                     "equipo_local": "Jordania",
                     "equipo_visitante": "Argentina",
-                    "fecha": "2026-06-27",
-                    "hora_espana": "23:00",
+                    "fecha": "2026-06-28",
+                    "hora_espana": "04:00",
                     "estadio": "Arrowhead Stadium",
                     "ciudad": "Kansas City"
                 },
@@ -844,8 +844,8 @@
                     "detalle_fase": "Grupo J",
                     "equipo_local": "Argelia",
                     "equipo_visitante": "Austria",
-                    "fecha": "2026-06-27",
-                    "hora_espana": "23:00",
+                    "fecha": "2026-06-28",
+                    "hora_espana": "04:00",
                     "estadio": "AT&T Stadium",
                     "ciudad": "Dallas"
                 },
@@ -857,7 +857,7 @@
                     "equipo_local": "Colombia",
                     "equipo_visitante": "Portugal",
                     "fecha": "2026-06-28",
-                    "hora_espana": "02:00",
+                    "hora_espana": "01:30",
                     "estadio": "Hard Rock Stadium",
                     "ciudad": "Miami"
                 },
@@ -869,7 +869,7 @@
                     "equipo_local": "RD Congo",
                     "equipo_visitante": "Uzbekistán",
                     "fecha": "2026-06-28",
-                    "hora_espana": "02:00",
+                    "hora_espana": "01:30",
                     "estadio": "Mercedes-Benz Stadium",
                     "ciudad": "Atlanta"
                 }
