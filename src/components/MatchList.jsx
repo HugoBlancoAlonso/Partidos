@@ -7,15 +7,31 @@ export default function MatchList({ matches, watchedCount, totalMatches, isWatch
 
   const percentage = totalMatches > 0 ? (watchedCount / totalMatches) * 100 : 0;
 
-  // Separar partidos por fase
-  const { groupMatches, knockoutMatches } = useMemo(() => {
-    const groups = matches.filter(m => m.fase === 'Fase de Grupos');
-    const knockout = matches.filter(m => m.fase === 'Fase Eliminatoria');
-    return { groupMatches: groups, knockoutMatches: knockout };
+  // Aplanar el nuevo formato de JSON si viene como objeto
+  const flatMatches = useMemo(() => {
+    if (Array.isArray(matches)) return matches;
+    
+    let all = [];
+    if (matches["Fase de Grupos"]) {
+      Object.values(matches["Fase de Grupos"]).forEach(jornadaArr => {
+        all = [...all, ...jornadaArr];
+      });
+    }
+    if (matches["Fase Eliminatoria"]) {
+      all = [...all, ...matches["Fase Eliminatoria"]];
+    }
+    return all;
   }, [matches]);
 
+  // Separar partidos por fase
+  const { groupMatches, knockoutMatches } = useMemo(() => {
+    const groups = flatMatches.filter(m => m.fase === 'Fase de Grupos');
+    const knockout = flatMatches.filter(m => m.fase === 'Fase Eliminatoria');
+    return { groupMatches: groups, knockoutMatches: knockout };
+  }, [flatMatches]);
+
   // Agrupar y ordenar
-  const { isNested, groupedMatches, orderedKeys } = useMemo(() => {
+  const { groupedMatches, orderedKeys } = useMemo(() => {
     const current = activeTab === 'grupos' ? groupMatches : knockoutMatches;
     
     // Ordenar cronológicamente (fecha y hora)
@@ -25,62 +41,63 @@ export default function MatchList({ matches, watchedCount, totalMatches, isWatch
       return dateA - dateB;
     });
 
+    const sectionsMap = {};
+    const sectionsKeys = [];
+    
+    // Contador para calcular la jornada en fase de grupos
+    const groupMatchCounts = {};
+
+    sorted.forEach(match => {
+      let sectionName;
+      
+      if (activeTab === 'grupos') {
+        if (match.jornada) {
+          sectionName = `Jornada ${match.jornada}`;
+        } else {
+          const group = match.detalle_fase; // e.g. "Grupo A"
+          if (!groupMatchCounts[group]) groupMatchCounts[group] = 0;
+          groupMatchCounts[group]++;
+          const jornadaNum = Math.ceil(groupMatchCounts[group] / 2);
+          sectionName = `Jornada ${jornadaNum}`;
+        }
+      } else {
+        sectionName = match.detalle_fase; // e.g. "Octavos de Final"
+      }
+
+      if (!sectionsMap[sectionName]) {
+        sectionsMap[sectionName] = {
+          datesMap: {},
+          datesKeys: []
+        };
+        sectionsKeys.push(sectionName);
+      }
+
+      const [year, month, day] = match.fecha.split('-');
+      const dateObj = new Date(year, month - 1, day);
+      const dateStr = dateObj.toLocaleDateString('es-ES', {
+        weekday: 'long',
+        day: 'numeric',
+        month: 'long'
+      });
+      const dateKey = dateStr.charAt(0).toUpperCase() + dateStr.slice(1);
+
+      if (!sectionsMap[sectionName].datesMap[dateKey]) {
+        sectionsMap[sectionName].datesMap[dateKey] = [];
+        sectionsMap[sectionName].datesKeys.push(dateKey);
+      }
+      sectionsMap[sectionName].datesMap[dateKey].push(match);
+    });
+
+    // Ordenar jornadas de forma estricta (Jornada 1, Jornada 2, etc.) en vez de orden cronológico estricto de aparición
     if (activeTab === 'grupos') {
-      const grouped = {};
-      const keys = [];
-
-      sorted.forEach(match => {
-        const [year, month, day] = match.fecha.split('-');
-        const dateObj = new Date(year, month - 1, day);
-        
-        const dateStr = dateObj.toLocaleDateString('es-ES', {
-          weekday: 'long',
-          day: 'numeric',
-          month: 'long'
-        });
-        const key = dateStr.charAt(0).toUpperCase() + dateStr.slice(1);
-        
-        if (!grouped[key]) {
-          grouped[key] = [];
-          keys.push(key);
-        }
-        grouped[key].push(match);
+      sectionsKeys.sort((a, b) => {
+        const numA = parseInt(a.replace('Jornada ', ''));
+        const numB = parseInt(b.replace('Jornada ', ''));
+        return numA - numB;
       });
-
-      return { isNested: false, groupedMatches: grouped, orderedKeys: keys };
-    } else {
-      // Eliminatorias: Fase -> Fecha
-      const phasesMap = {};
-      const phasesKeys = [];
-
-      sorted.forEach(match => {
-        const phaseName = match.detalle_fase;
-        if (!phasesMap[phaseName]) {
-          phasesMap[phaseName] = {
-            datesMap: {},
-            datesKeys: []
-          };
-          phasesKeys.push(phaseName);
-        }
-
-        const [year, month, day] = match.fecha.split('-');
-        const dateObj = new Date(year, month - 1, day);
-        const dateStr = dateObj.toLocaleDateString('es-ES', {
-          weekday: 'long',
-          day: 'numeric',
-          month: 'long'
-        });
-        const dateKey = dateStr.charAt(0).toUpperCase() + dateStr.slice(1);
-
-        if (!phasesMap[phaseName].datesMap[dateKey]) {
-          phasesMap[phaseName].datesMap[dateKey] = [];
-          phasesMap[phaseName].datesKeys.push(dateKey);
-        }
-        phasesMap[phaseName].datesMap[dateKey].push(match);
-      });
-
-      return { isNested: true, groupedMatches: phasesMap, orderedKeys: phasesKeys };
     }
+
+    return { groupedMatches: sectionsMap, orderedKeys: sectionsKeys };
   }, [activeTab, groupMatches, knockoutMatches]);
 
   // Contar vistos por tab
@@ -130,52 +147,30 @@ export default function MatchList({ matches, watchedCount, totalMatches, isWatch
 
       {/* Match sections */}
       <div className="match-list__content">
-        {!isNested ? (
-          orderedKeys.map((dateKey, index) => (
-            <section
-              key={dateKey}
-              className="match-list__section animate-fade-in"
-              style={{ animationDelay: `${index * 50}ms` }}
-            >
-              <h3 className="match-list__section-title">{dateKey}</h3>
-              <div className="match-list__matches">
-                {groupedMatches[dateKey].map(match => (
-                  <MatchCard
-                    key={match.id_partido}
-                    match={match}
-                    isWatched={isWatched(match.id_partido)}
-                    onToggleWatched={onToggleWatched}
-                  />
-                ))}
-              </div>
-            </section>
-          ))
-        ) : (
-          orderedKeys.map((phaseKey, index) => (
-            <section
-              key={phaseKey}
-              className="match-list__section animate-fade-in"
-              style={{ animationDelay: `${index * 50}ms`, marginBottom: 'var(--space-2xl)' }}
-            >
-              <h2 className="match-list__phase-title" style={{ fontSize: 'var(--fs-lg)', fontWeight: '800', color: 'var(--text-primary)', textAlign: 'center', marginBottom: 'var(--space-lg)', paddingBottom: 'var(--space-sm)', borderBottom: '1px solid rgba(255, 255, 255, 0.1)' }}>{phaseKey}</h2>
-              {groupedMatches[phaseKey].datesKeys.map(dateKey => (
-                <div key={dateKey} style={{ marginBottom: 'var(--space-lg)' }}>
-                  <h3 className="match-list__section-title">{dateKey}</h3>
-                  <div className="match-list__matches">
-                    {groupedMatches[phaseKey].datesMap[dateKey].map(match => (
-                      <MatchCard
-                        key={match.id_partido}
-                        match={match}
-                        isWatched={isWatched(match.id_partido)}
-                        onToggleWatched={onToggleWatched}
-                      />
-                    ))}
-                  </div>
+        {orderedKeys.map((sectionKey, index) => (
+          <section
+            key={sectionKey}
+            className="match-list__section animate-fade-in"
+            style={{ animationDelay: `${index * 50}ms`, marginBottom: 'var(--space-2xl)' }}
+          >
+            <h2 className="match-list__phase-title" style={{ fontSize: 'var(--fs-lg)', fontWeight: '800', color: 'var(--text-primary)', textAlign: 'center', marginBottom: 'var(--space-lg)', paddingBottom: 'var(--space-sm)', borderBottom: '1px solid rgba(255, 255, 255, 0.1)' }}>{sectionKey}</h2>
+            {groupedMatches[sectionKey].datesKeys.map(dateKey => (
+              <div key={dateKey} style={{ marginBottom: 'var(--space-lg)' }}>
+                <h3 className="match-list__section-title">{dateKey}</h3>
+                <div className="match-list__matches">
+                  {groupedMatches[sectionKey].datesMap[dateKey].map(match => (
+                    <MatchCard
+                      key={match.id_partido}
+                      match={match}
+                      isWatched={isWatched(match.id_partido)}
+                      onToggleWatched={onToggleWatched}
+                    />
+                  ))}
                 </div>
-              ))}
-            </section>
-          ))
-        )}
+              </div>
+            ))}
+          </section>
+        ))}
       </div>
     </div>
   );
