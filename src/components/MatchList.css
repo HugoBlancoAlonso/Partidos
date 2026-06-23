@@ -5,22 +5,25 @@
   padding-bottom: var(--space-2xl);
 }
 
-/* Compact Unified Top Navigation */
+/* Semi-transparent Top Navigation */
 .match-list__top-nav {
   position: sticky;
   top: 0;
   z-index: 100;
-  background: var(--bg-card); /* Simple solid dark background */
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  background: rgba(18, 18, 20, 0.6); /* Medio transparente */
+  backdrop-filter: blur(8px); /* Ligero desenfoque para que el texto de abajo no moleste al leer */
+  -webkit-backdrop-filter: blur(8px);
   display: flex;
   flex-direction: column;
+  padding-bottom: 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .match-list__header-content {
   display: flex;
   align-items: center;
   gap: var(--space-sm);
-  padding: 12px 16px 8px; /* Reduced vertical padding */
+  padding: 16px 16px 12px;
 }
 
 .match-list__back {
@@ -44,12 +47,12 @@
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
-  gap: 8px 12px; /* Side by side if there is space */
+  gap: 8px 12px;
   flex: 1;
 }
 
 .match-list__title {
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 700;
   color: var(--text-primary);
   margin: 0;
@@ -61,10 +64,10 @@
   margin: 0;
 }
 
-/* Compact Tabs inside unified header */
+/* Tabs inside unified header - Restored to pill buttons */
 .match-list__tabs {
   display: flex;
-  padding: 0 16px 12px;
+  padding: 0 16px;
   gap: 8px;
 }
 
@@ -72,7 +75,7 @@
   flex: 1;
   padding: 8px 12px;
   border-radius: 6px;
-  background: rgba(255, 255, 255, 0.02);
+  background: rgba(255, 255, 255, 0.03); /* Cajas tipo botón de nuevo */
   color: var(--text-muted);
   font-size: 13px;
   font-weight: 500;
@@ -81,26 +84,28 @@
   justify-content: center;
   align-items: center;
   gap: 6px;
-  border: 1px solid rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.04);
   cursor: pointer;
 }
 
 .match-list__tab:hover {
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.06);
   color: var(--text-primary);
 }
 
 .match-list__tab--active {
-  background: rgba(255, 255, 255, 0.08);
-  color: var(--text-primary);
-  border-color: rgba(255, 255, 255, 0.1);
+  background: rgba(196, 168, 79, 0.15); /* Fondo dorado sutil */
+  color: var(--accent-gold); /* Texto dorado */
+  border-bottom: 1px solid rgba(196, 168, 79, 0.3); /* Restore border all around */
+  border: 1px solid rgba(196, 168, 79, 0.3);
 }
 
-/* Thin Progress bar */
+/* Thin Progress bar at the bottom of the invisible container */
 .match-list__progress-bar {
   height: 2px;
-  background: transparent;
+  background: rgba(255, 255, 255, 0.05); /* Very subtle track */
   width: 100%;
+  margin-top: 12px;
 }
 
 .match-list__progress-fill {
@@ -110,14 +115,14 @@
 }
 
 .match-list__tab-count {
-  font-size: 11px;
+  font-size: 12px;
   color: var(--text-muted);
   background: transparent;
   padding: 0;
 }
 
 .match-list__tab--active .match-list__tab-count {
-  color: var(--text-secondary);
+  color: var(--accent-gold-light);
 }
 
 /* Content */
