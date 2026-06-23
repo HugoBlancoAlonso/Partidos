@@ -5,119 +5,119 @@
   padding-bottom: var(--space-2xl);
 }
 
-/* Header */
-.match-list__header {
+/* Compact Unified Top Navigation */
+.match-list__top-nav {
   position: sticky;
   top: 0;
   z-index: 100;
+  background: var(--bg-card); /* Simple solid dark background */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  display: flex;
+  flex-direction: column;
+}
+
+.match-list__header-content {
   display: flex;
   align-items: center;
-  gap: var(--space-md);
-  padding: var(--space-md);
-  background: rgba(18, 18, 20, 0.85);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border-bottom: 1px solid var(--bg-card-border);
+  gap: var(--space-sm);
+  padding: 12px 16px 8px; /* Reduced vertical padding */
 }
 
 .match-list__back {
-  width: 36px;
-  height: 36px;
+  width: 28px;
+  height: 28px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: var(--radius-sm);
-  background: var(--bg-glass);
-  color: var(--text-primary);
-  transition: all var(--transition-fast);
-  flex-shrink: 0;
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: transparent;
+  color: var(--text-secondary);
+  border: none;
+  cursor: pointer;
+  transition: color 0.2s ease;
 }
 
 .match-list__back:hover {
-  background: var(--bg-glass-strong);
-}
-
-.match-list__header-text {
-  min-width: 0;
-}
-
-.match-list__title {
-  font-size: var(--fs-md);
-  font-weight: 700;
   color: var(--text-primary);
 }
 
-.match-list__subtitle {
-  font-size: var(--fs-xs);
-  color: var(--text-secondary);
+.match-list__header-text {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 8px 12px; /* Side by side if there is space */
+  flex: 1;
 }
 
-/* Progress bar */
+.match-list__title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.match-list__subtitle {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+/* Compact Tabs inside unified header */
+.match-list__tabs {
+  display: flex;
+  padding: 0 16px 12px;
+  gap: 8px;
+}
+
+.match-list__tab {
+  flex: 1;
+  padding: 8px 12px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.02);
+  color: var(--text-muted);
+  font-size: 13px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.03);
+  cursor: pointer;
+}
+
+.match-list__tab:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-primary);
+}
+
+.match-list__tab--active {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text-primary);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Thin Progress bar */
 .match-list__progress-bar {
-  height: 3px;
-  background: rgba(255, 255, 255, 0.04);
-  position: sticky;
-  top: 69px;
-  z-index: 99;
+  height: 2px;
+  background: transparent;
+  width: 100%;
 }
 
 .match-list__progress-fill {
   height: 100%;
   background: var(--gradient-green);
-  transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-  border-radius: 0 2px 2px 0;
-  box-shadow: 0 0 8px rgba(74, 222, 128, 0.4);
-}
-
-/* Tabs */
-.match-list__tabs {
-  display: flex;
-  padding: var(--space-md) var(--space-md) 0;
-  gap: var(--space-sm);
-  position: sticky;
-  top: 72px;
-  z-index: 98;
-  background: var(--bg-primary);
-  padding-bottom: var(--space-md);
-}
-
-.match-list__tab {
-  flex: 1;
-  padding: 10px 12px;
-  border-radius: var(--radius-md);
-  background: var(--bg-card);
-  color: var(--text-muted);
-  font-size: var(--fs-sm);
-  font-weight: 500;
-  transition: all var(--transition-base);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2px;
-  border: 1px solid transparent;
-}
-
-.match-list__tab:hover {
-  background: var(--bg-card-hover);
-  color: var(--text-secondary);
-}
-
-.match-list__tab--active {
-  background: rgba(196, 168, 79, 0.1);
-  color: var(--accent-gold);
-  border-color: rgba(196, 168, 79, 0.2);
+  transition: width 0.3s ease;
 }
 
 .match-list__tab-count {
-  font-size: var(--fs-xs);
-  font-weight: 600;
-  opacity: 0.7;
+  font-size: 11px;
+  color: var(--text-muted);
+  background: transparent;
+  padding: 0;
 }
 
 .match-list__tab--active .match-list__tab-count {
-  opacity: 1;
-  color: var(--accent-gold-light);
+  color: var(--text-secondary);
 }
 
 /* Content */

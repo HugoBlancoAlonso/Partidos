@@ -106,43 +106,45 @@ export default function MatchList({ matches, watchedCount, totalMatches, isWatch
 
   return (
     <div className="match-list">
-      {/* Header */}
-      <header className="match-list__header glass-strong">
-        <button className="match-list__back" onClick={onBack}>
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-            <polyline points="15 18 9 12 15 6" />
-          </svg>
-        </button>
-        <div className="match-list__header-text" style={{ flex: 1 }}>
-          <h1 className="match-list__title">Mundial 2026</h1>
-          <p className="match-list__subtitle">{watchedCount} de {totalMatches} partidos vistos</p>
+      {/* Unified Top Navigation */}
+      <div className="match-list__top-nav">
+        <div className="match-list__header-content">
+          <button className="match-list__back" onClick={onBack}>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <polyline points="15 18 9 12 15 6" />
+            </svg>
+          </button>
+          <div className="match-list__header-text" style={{ flex: 1 }}>
+            <h1 className="match-list__title">Mundial 2026</h1>
+            <p className="match-list__subtitle">{watchedCount} de {totalMatches} partidos vistos</p>
+          </div>
         </div>
-      </header>
 
-      {/* Progress bar */}
-      <div className="match-list__progress-bar">
-        <div
-          className="match-list__progress-fill"
-          style={{ width: `${percentage}%` }}
-        />
-      </div>
+        {/* Tabs inside unified header */}
+        <div className="match-list__tabs">
+          <button
+            className={`match-list__tab ${activeTab === 'grupos' ? 'match-list__tab--active' : ''}`}
+            onClick={() => setActiveTab('grupos')}
+          >
+            <span>Fase de Grupos</span>
+            <span className="match-list__tab-count">{groupWatched}/{groupMatches.length}</span>
+          </button>
+          <button
+            className={`match-list__tab ${activeTab === 'eliminatorias' ? 'match-list__tab--active' : ''}`}
+            onClick={() => setActiveTab('eliminatorias')}
+          >
+            <span>Eliminatorias</span>
+            <span className="match-list__tab-count">{knockoutWatched}/{knockoutMatches.length}</span>
+          </button>
+        </div>
 
-      {/* Tabs */}
-      <div className="match-list__tabs">
-        <button
-          className={`match-list__tab ${activeTab === 'grupos' ? 'match-list__tab--active' : ''}`}
-          onClick={() => setActiveTab('grupos')}
-        >
-          <span>Fase de Grupos</span>
-          <span className="match-list__tab-count">{groupWatched}/{groupMatches.length}</span>
-        </button>
-        <button
-          className={`match-list__tab ${activeTab === 'eliminatorias' ? 'match-list__tab--active' : ''}`}
-          onClick={() => setActiveTab('eliminatorias')}
-        >
-          <span>Eliminatorias</span>
-          <span className="match-list__tab-count">{knockoutWatched}/{knockoutMatches.length}</span>
-        </button>
+        {/* Progress bar at bottom of unified header */}
+        <div className="match-list__progress-bar">
+          <div
+            className="match-list__progress-fill"
+            style={{ width: `${percentage}%` }}
+          />
+        </div>
       </div>
 
       {/* Match sections */}
