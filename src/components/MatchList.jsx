@@ -14,8 +14,8 @@ export default function MatchList({ matches, watchedCount, totalMatches, isWatch
     return { groupMatches: groups, knockoutMatches: knockout };
   }, [matches]);
 
-  // Agrupar y ordenar por fecha
-  const { groupedByDate, orderedKeys } = useMemo(() => {
+  // Agrupar y ordenar
+  const { isNested, groupedMatches, orderedKeys } = useMemo(() => {
     const current = activeTab === 'grupos' ? groupMatches : knockoutMatches;
     
     // Ordenar cronológicamente (fecha y hora)
@@ -25,30 +25,62 @@ export default function MatchList({ matches, watchedCount, totalMatches, isWatch
       return dateA - dateB;
     });
 
-    const grouped = {};
-    const keys = [];
+    if (activeTab === 'grupos') {
+      const grouped = {};
+      const keys = [];
 
-    sorted.forEach(match => {
-      // Usar las partes de la fecha para evitar desfases de zona horaria
-      const [year, month, day] = match.fecha.split('-');
-      const dateObj = new Date(year, month - 1, day);
-      
-      const dateStr = dateObj.toLocaleDateString('es-ES', {
-        weekday: 'long',
-        day: 'numeric',
-        month: 'long'
+      sorted.forEach(match => {
+        const [year, month, day] = match.fecha.split('-');
+        const dateObj = new Date(year, month - 1, day);
+        
+        const dateStr = dateObj.toLocaleDateString('es-ES', {
+          weekday: 'long',
+          day: 'numeric',
+          month: 'long'
+        });
+        const key = dateStr.charAt(0).toUpperCase() + dateStr.slice(1);
+        
+        if (!grouped[key]) {
+          grouped[key] = [];
+          keys.push(key);
+        }
+        grouped[key].push(match);
       });
-      // Capitalizar primera letra
-      const key = dateStr.charAt(0).toUpperCase() + dateStr.slice(1);
-      
-      if (!grouped[key]) {
-        grouped[key] = [];
-        keys.push(key);
-      }
-      grouped[key].push(match);
-    });
 
-    return { groupedByDate: grouped, orderedKeys: keys };
+      return { isNested: false, groupedMatches: grouped, orderedKeys: keys };
+    } else {
+      // Eliminatorias: Fase -> Fecha
+      const phasesMap = {};
+      const phasesKeys = [];
+
+      sorted.forEach(match => {
+        const phaseName = match.detalle_fase;
+        if (!phasesMap[phaseName]) {
+          phasesMap[phaseName] = {
+            datesMap: {},
+            datesKeys: []
+          };
+          phasesKeys.push(phaseName);
+        }
+
+        const [year, month, day] = match.fecha.split('-');
+        const dateObj = new Date(year, month - 1, day);
+        const dateStr = dateObj.toLocaleDateString('es-ES', {
+          weekday: 'long',
+          day: 'numeric',
+          month: 'long'
+        });
+        const dateKey = dateStr.charAt(0).toUpperCase() + dateStr.slice(1);
+
+        if (!phasesMap[phaseName].datesMap[dateKey]) {
+          phasesMap[phaseName].datesMap[dateKey] = [];
+          phasesMap[phaseName].datesKeys.push(dateKey);
+        }
+        phasesMap[phaseName].datesMap[dateKey].push(match);
+      });
+
+      return { isNested: true, groupedMatches: phasesMap, orderedKeys: phasesKeys };
+    }
   }, [activeTab, groupMatches, knockoutMatches]);
 
   // Contar vistos por tab
@@ -98,25 +130,52 @@ export default function MatchList({ matches, watchedCount, totalMatches, isWatch
 
       {/* Match sections */}
       <div className="match-list__content">
-        {orderedKeys.map((phase, index) => (
-          <section
-            key={phase}
-            className="match-list__section animate-fade-in"
-            style={{ animationDelay: `${index * 50}ms` }}
-          >
-            <h3 className="match-list__section-title">{phase}</h3>
-            <div className="match-list__matches">
-              {groupedByDate[phase].map(match => (
-                <MatchCard
-                  key={match.id_partido}
-                  match={match}
-                  isWatched={isWatched(match.id_partido)}
-                  onToggleWatched={onToggleWatched}
-                />
+        {!isNested ? (
+          orderedKeys.map((dateKey, index) => (
+            <section
+              key={dateKey}
+              className="match-list__section animate-fade-in"
+              style={{ animationDelay: `${index * 50}ms` }}
+            >
+              <h3 className="match-list__section-title">{dateKey}</h3>
+              <div className="match-list__matches">
+                {groupedMatches[dateKey].map(match => (
+                  <MatchCard
+                    key={match.id_partido}
+                    match={match}
+                    isWatched={isWatched(match.id_partido)}
+                    onToggleWatched={onToggleWatched}
+                  />
+                ))}
+              </div>
+            </section>
+          ))
+        ) : (
+          orderedKeys.map((phaseKey, index) => (
+            <section
+              key={phaseKey}
+              className="match-list__section animate-fade-in"
+              style={{ animationDelay: `${index * 50}ms`, marginBottom: 'var(--space-2xl)' }}
+            >
+              <h2 className="match-list__phase-title" style={{ fontSize: 'var(--fs-lg)', fontWeight: '800', color: 'var(--text-primary)', textAlign: 'center', marginBottom: 'var(--space-lg)', paddingBottom: 'var(--space-sm)', borderBottom: '1px solid rgba(255, 255, 255, 0.1)' }}>{phaseKey}</h2>
+              {groupedMatches[phaseKey].datesKeys.map(dateKey => (
+                <div key={dateKey} style={{ marginBottom: 'var(--space-lg)' }}>
+                  <h3 className="match-list__section-title">{dateKey}</h3>
+                  <div className="match-list__matches">
+                    {groupedMatches[phaseKey].datesMap[dateKey].map(match => (
+                      <MatchCard
+                        key={match.id_partido}
+                        match={match}
+                        isWatched={isWatched(match.id_partido)}
+                        onToggleWatched={onToggleWatched}
+                      />
+                    ))}
+                  </div>
+                </div>
               ))}
-            </div>
-          </section>
-        ))}
+            </section>
+          ))
+        )}
       </div>
     </div>
   );
