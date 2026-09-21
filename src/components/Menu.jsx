@@ -1,7 +1,7 @@
 import CircularProgress from './CircularProgress';
 import './Menu.css';
 
-export default function Menu({ username, competitions, watchedCount, onSelectTournament, onLogout, theme, onToggleTheme }) {
+export default function Menu({ username, competitions, isWatched, onSelectTournament, onLogout, theme, onToggleTheme }) {
 
   return (
     <div className="menu">
@@ -31,10 +31,9 @@ export default function Menu({ username, competitions, watchedCount, onSelectTou
         <h3 className="menu__section-title animate-fade-in">Mis Competiciones</h3>
 
         {competitions && competitions.map((comp, index) => {
-          // For now we calculate percentage based on total watched count for ALL matches 
-          // Ideally, watchedCount would be per-competition, but we leave it global for now 
-          // to match the previous behavior, or we can just pass the total_partidos.
-          const percentage = comp.total_partidos > 0 ? (watchedCount / comp.total_partidos) * 100 : 0;
+          const compWatchedCount = comp.allMatchIds ? comp.allMatchIds.filter(id => isWatched(id)).length : 0;
+          const percentage = comp.total_partidos > 0 ? (compWatchedCount / comp.total_partidos) * 100 : 0;
+          
           return (
             <button
               key={comp.id}
@@ -50,12 +49,11 @@ export default function Menu({ username, competitions, watchedCount, onSelectTou
               <div className="menu__tournament-info">
                 <div className="menu__tournament-text">
                   <h3 className="menu__tournament-name">{comp.name}</h3>
-                  {/* Location might need to be part of JSON, hardcoding for now if missing, or use an empty string */}
                   <p className="menu__tournament-location">
                     {comp.id === 'mundial2026' ? '🇺🇸 USA · 🇲🇽 México · 🇨🇦 Canadá' : '📍 ' + comp.name}
                   </p>
                   <p className="menu__tournament-stats">
-                    <span className="menu__tournament-watched">{watchedCount}</span>
+                    <span className="menu__tournament-watched">{compWatchedCount}</span>
                     <span className="menu__tournament-separator"> de </span>
                     <span>{comp.total_partidos} partidos vistos</span>
                   </p>

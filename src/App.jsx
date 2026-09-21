@@ -100,10 +100,12 @@ function App() {
     const activeCompetition = competitions.find(c => c.id === selectedCompId);
     if (!activeCompetition) return <div className="app-loading">Error cargando competición</div>;
 
+    const compWatchedCount = activeCompetition.allMatchIds.filter(id => isWatched(id)).length;
+
     return (
       <MatchList
         competition={activeCompetition}
-        watchedCount={watchedCount}
+        watchedCount={compWatchedCount}
         isWatched={isWatched}
         onToggleWatched={toggleWatched}
         onBack={() => {
@@ -121,7 +123,7 @@ function App() {
     <Menu
       username={username}
       competitions={competitions}
-      watchedCount={watchedCount}
+      isWatched={isWatched}
       onSelectTournament={(compId) => {
         setSelectedCompId(compId);
         setView('matches');

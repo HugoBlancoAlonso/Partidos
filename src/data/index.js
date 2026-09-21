@@ -45,11 +45,26 @@ export const competitions = Object.keys(modules).map((path) => {
     updateIds(data.partidos);
   }
   
+  const matchIds = [];
+  function collectIds(obj) {
+    if (Array.isArray(obj)) {
+      obj.forEach(item => {
+        if (item.id_partido) matchIds.push(item.id_partido);
+      });
+    } else if (typeof obj === 'object' && obj !== null) {
+      for (let key in obj) {
+        collectIds(obj[key]);
+      }
+    }
+  }
+  collectIds(data.partidos);
+  
   return {
     id: folder,
     data: data,
     name: data.torneo || folder,
     total_partidos: data.total_partidos || 0,
-    partidos: data.partidos || {}
+    partidos: data.partidos || {},
+    allMatchIds: matchIds
   };
 });
