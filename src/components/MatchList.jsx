@@ -10,32 +10,51 @@ export default function MatchList({ competition, watchedCount, isWatched, onTogg
 
   const percentage = totalMatches > 0 ? (watchedCount / totalMatches) * 100 : 0;
 
-  // Aplanar el nuevo formato de JSON si viene como objeto
+  // Aplanar el formato de JSON dinámicamente y rellenar datos faltantes
   const flatMatches = useMemo(() => {
     if (Array.isArray(matches)) return matches;
     
     let all = [];
-    if (matches["Fase de Grupos"]) {
-      Object.values(matches["Fase de Grupos"]).forEach(jornadaArr => {
-        all = [...all, ...jornadaArr];
+    const extractMatches = (obj, parentKey = null) => {
+      Object.entries(obj).forEach(([key, val]) => {
+        if (Array.isArray(val)) {
+           const faseValue = parentKey && parentKey.toLowerCase().includes('eliminatoria') 
+              ? 'Fase Eliminatoria' 
+              : (parentKey || 'Fase de Grupos');
+           const isJornada = key.toLowerCase().includes('jornada');
+           
+           val.forEach(match => {
+              const m = { ...match }; // Clonar para no mutar el estado global
+              if (!m.fase) m.fase = faseValue;
+              if (!m.jornada && isJornada) {
+                  const num = parseInt(key.replace(/\\D/g, ''));
+                  m.jornada = !isNaN(num) ? num : key;
+              }
+              if (!m.detalle_fase) m.detalle_fase = key;
+              all.push(m);
+           });
+        } else if (typeof val === 'object' && val !== null) {
+           extractMatches(val, key);
+        }
       });
-    }
-    if (matches["Fase Eliminatoria"]) {
-      all = [...all, ...matches["Fase Eliminatoria"]];
-    }
+    };
+
+    extractMatches(matches);
     return all;
   }, [matches]);
 
   // Separar partidos por fase
   const { groupMatches, knockoutMatches } = useMemo(() => {
-    const groups = flatMatches.filter(m => m.fase === 'Fase de Grupos');
+    const groups = flatMatches.filter(m => m.fase !== 'Fase Eliminatoria');
     const knockout = flatMatches.filter(m => m.fase === 'Fase Eliminatoria');
     return { groupMatches: groups, knockoutMatches: knockout };
   }, [flatMatches]);
 
+  const hasKnockouts = knockoutMatches.length > 0;
+
   // Agrupar y ordenar
   const { groupedMatches, orderedKeys } = useMemo(() => {
-    const current = activeTab === 'grupos' ? groupMatches : knockoutMatches;
+    const current = activeTab === 'grupos' || !hasKnockouts ? groupMatches : knockoutMatches;
     
     // Ordenar cronológicamente (fecha y hora)
     const sorted = [...current].sort((a, b) => {
@@ -53,34 +72,29 @@ export default function MatchList({ competition, watchedCount, isWatched, onTogg
     sorted.forEach(match => {
       let sectionName;
       
-      if (activeTab === 'grupos') {
+      if (activeTab === 'grupos' || !hasKnockouts) {
         if (match.jornada) {
           sectionName = `Jornada ${match.jornada}`;
         } else {
-          const group = match.detalle_fase; // e.g. "Grupo A"
+          const group = match.detalle_fase || 'General';
           if (!groupMatchCounts[group]) groupMatchCounts[group] = 0;
           groupMatchCounts[group]++;
           const jornadaNum = Math.ceil(groupMatchCounts[group] / 2);
           sectionName = `Jornada ${jornadaNum}`;
         }
       } else {
-        sectionName = match.detalle_fase; // e.g. "Octavos de Final"
+        sectionName = match.detalle_fase; 
       }
 
       if (!sectionsMap[sectionName]) {
-        sectionsMap[sectionName] = {
-          datesMap: {},
-          datesKeys: []
-        };
+        sectionsMap[sectionName] = { datesMap: {}, datesKeys: [] };
         sectionsKeys.push(sectionName);
       }
 
       const [year, month, day] = match.fecha.split('-');
       const dateObj = new Date(year, month - 1, day);
       const dateStr = dateObj.toLocaleDateString('es-ES', {
-        weekday: 'long',
-        day: 'numeric',
-        month: 'long'
+        weekday: 'long', day: 'numeric', month: 'long'
       });
       const dateKey = dateStr.charAt(0).toUpperCase() + dateStr.slice(1);
 
@@ -91,17 +105,18 @@ export default function MatchList({ competition, watchedCount, isWatched, onTogg
       sectionsMap[sectionName].datesMap[dateKey].push(match);
     });
 
-    // Ordenar jornadas de forma estricta (Jornada 1, Jornada 2, etc.) en vez de orden cronológico estricto de aparición
-    if (activeTab === 'grupos') {
+    // Ordenar jornadas de forma estricta (Jornada 1, Jornada 2, etc.) en vez de orden cronológico estricto
+    if (activeTab === 'grupos' || !hasKnockouts) {
       sectionsKeys.sort((a, b) => {
         const numA = parseInt(a.replace('Jornada ', ''));
         const numB = parseInt(b.replace('Jornada ', ''));
-        return numA - numB;
+        if (!isNaN(numA) && !isNaN(numB)) return numA - numB;
+        return 0;
       });
     }
 
     return { groupedMatches: sectionsMap, orderedKeys: sectionsKeys };
-  }, [activeTab, groupMatches, knockoutMatches]);
+  }, [activeTab, groupMatches, knockoutMatches, hasKnockouts]);
 
   // Contar vistos por tab
   const groupWatched = groupMatches.filter(m => isWatched(m.id_partido)).length;
@@ -124,22 +139,24 @@ export default function MatchList({ competition, watchedCount, isWatched, onTogg
         </div>
 
         {/* Tabs inside unified header */}
-        <div className="match-list__tabs">
-          <button
-            className={`match-list__tab ${activeTab === 'grupos' ? 'match-list__tab--active' : ''}`}
-            onClick={() => setActiveTab('grupos')}
-          >
-            <span>Fase de Grupos</span>
-            <span className="match-list__tab-count">{groupWatched}/{groupMatches.length}</span>
-          </button>
-          <button
-            className={`match-list__tab ${activeTab === 'eliminatorias' ? 'match-list__tab--active' : ''}`}
-            onClick={() => setActiveTab('eliminatorias')}
-          >
-            <span>Eliminatorias</span>
-            <span className="match-list__tab-count">{knockoutWatched}/{knockoutMatches.length}</span>
-          </button>
-        </div>
+        {hasKnockouts && (
+          <div className="match-list__tabs">
+            <button
+              className={`match-list__tab ${activeTab === 'grupos' ? 'match-list__tab--active' : ''}`}
+              onClick={() => setActiveTab('grupos')}
+            >
+              <span>Fase de Grupos</span>
+              <span className="match-list__tab-count">{groupWatched}/{groupMatches.length}</span>
+            </button>
+            <button
+              className={`match-list__tab ${activeTab === 'eliminatorias' ? 'match-list__tab--active' : ''}`}
+              onClick={() => setActiveTab('eliminatorias')}
+            >
+              <span>Eliminatorias</span>
+              <span className="match-list__tab-count">{knockoutWatched}/{knockoutMatches.length}</span>
+            </button>
+          </div>
+        )}
 
         {/* Progress bar at bottom of unified header */}
         <div className="match-list__progress-bar">
