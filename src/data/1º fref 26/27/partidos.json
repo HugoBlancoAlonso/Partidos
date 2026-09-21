@@ -1,0 +1,425 @@
+{
+    "torneo": "1ª Fref 2026/2027",
+    "fecha": "2026-08-30",
+    "total_partidos": 38,
+    "partidos": {
+        "Jornada 1": [
+            {
+                "id_partido": 2001,
+                "equipo_local": "Barakaldo CF",
+                "equipo_visitante": "Cultural y Deportiva Leonesa",
+                "fecha": "2026-08-30",
+                "hora_espana": "17:00",
+                "estadio": "Lasesarre",
+                "ciudad": "Barakaldo"
+            }
+        ],
+        "Jornada 2": [
+            {
+                "id_partido": 2002,
+                "equipo_local": "Cultural y Deportiva Leonesa",
+                "equipo_visitante": "Asociación Deportiva Mérida",
+                "fecha": "2026-09-06",
+                "hora_espana": "16:00",
+                "estadio": "Estadio Reino de León",
+                "ciudad": "León"
+            }
+        ],
+        "Jornada 3": [
+            {
+                "id_partido": 2003,
+                "equipo_local": "Club Polideportivo Cacereño",
+                "equipo_visitante": "Cultural y Deportiva Leonesa",
+                "fecha": "2026-09-13",
+                "hora_espana": "18:15",
+                "estadio": "Estadio Príncipe Felipe",
+                "ciudad": "Cáceres"
+            }
+        ],
+        "Jornada 4": [
+            {
+                "id_partido": 2004,
+                "equipo_local": "Club Deportivo Extremadura",
+                "equipo_visitante": "Cultural y Deportiva Leonesa",
+                "fecha": "2026-09-20",
+                "hora_espana": "20:00",
+                "estadio": "Estadio Francisco de la Hera",
+                "ciudad": "Almendralejo"
+            }
+        ],
+        "Jornada 5": [
+            {
+                "id_partido": 2005,
+                "equipo_local": "Cultural y Deportiva Leonesa",
+                "equipo_visitante": "Club Deportivo Coria",
+                "fecha": "2026-09-26",
+                "hora_espana": "16:30",
+                "estadio": "Estadio Reino de León",
+                "ciudad": "León"
+            }
+        ],
+        "Jornada 6": [
+            {
+                "id_partido": 2006,
+                "equipo_local": "Unionistas de Salamanca Club de Fútbol",
+                "equipo_visitante": "Cultural y Deportiva Leonesa",
+                "fecha": "2026-10-03",
+                "hora_espana": "18:45",
+                "estadio": "Estadio Municipal Reina Sofía",
+                "ciudad": "Salamanca"
+            }
+        ],
+        "Jornada 7": [
+            {
+                "id_partido": 2007,
+                "equipo_local": "Cultural y Deportiva Leonesa",
+                "equipo_visitante": "Arenas Club",
+                "fecha": "2026-10-12",
+                "hora_espana": "16:00",
+                "estadio": "Estadio Reino de León",
+                "ciudad": "León"
+            }
+        ],
+        "Jornada 8": [
+            {
+                "id_partido": 2008,
+                "equipo_local": "Unión Deportiva Logroñés",
+                "equipo_visitante": "Cultural y Deportiva Leonesa",
+                "fecha": "2026-10-18",
+                "hora_espana": "20:30",
+                "estadio": "Estadio Las Gaunas",
+                "ciudad": "Logroño"
+            }
+        ],
+        "Jornada 9": [
+            {
+                "id_partido": 2009,
+                "equipo_local": "Cultural y Deportiva Leonesa",
+                "equipo_visitante": "Pontevedra Club de Fútbol",
+                "fecha": "2026-10-25",
+                "hora_espana": "17:00",
+                "estadio": "Estadio Reino de León",
+                "ciudad": "León"
+            }
+        ],
+        "Jornada 10": [
+            {
+                "id_partido": 2010,
+                "equipo_local": "Unión Deportiva Ourense",
+                "equipo_visitante": "Cultural y Deportiva Leonesa",
+                "fecha": "2026-11-01",
+                "hora_espana": "17:00",
+                "estadio": "Estadio O Couto",
+                "ciudad": "Ourense"
+            }
+        ],
+        "Jornada 11": [
+            {
+                "id_partido": 2011,
+                "equipo_local": "Cultural y Deportiva Leonesa",
+                "equipo_visitante": "Sociedad Deportiva Ponferradina",
+                "fecha": "2026-11-08",
+                "hora_espana": "17:00",
+                "estadio": "Estadio Reino de León",
+                "ciudad": "León"
+            }
+        ],
+        "Jornada 12": [
+            {
+                "id_partido": 2012,
+                "equipo_local": "Real Unión Club",
+                "equipo_visitante": "Cultural y Deportiva Leonesa",
+                "fecha": "2026-11-15",
+                "hora_espana": "17:00",
+                "estadio": "Stadium Gal",
+                "ciudad": "Irún"
+            }
+        ],
+        "Jornada 13": [
+            {
+                "id_partido": 2013,
+                "equipo_local": "Cultural y Deportiva Leonesa",
+                "equipo_visitante": "Zamora Club de Fútbol",
+                "fecha": "2026-11-22",
+                "hora_espana": "17:00",
+                "estadio": "Estadio Reino de León",
+                "ciudad": "León"
+            }
+        ],
+        "Jornada 14": [
+            {
+                "id_partido": 2014,
+                "equipo_local": "Bilbao Athletic",
+                "equipo_visitante": "Cultural y Deportiva Leonesa",
+                "fecha": "2026-11-29",
+                "hora_espana": "17:00",
+                "estadio": "Instalaciones de Lezama",
+                "ciudad": "Bilbao"
+            }
+        ],
+        "Jornada 15": [
+            {
+                "id_partido": 2015,
+                "equipo_local": "Cultural y Deportiva Leonesa",
+                "equipo_visitante": "Racing Club de Ferrol",
+                "fecha": "2026-12-06",
+                "hora_espana": "17:00",
+                "estadio": "Estadio Reino de León",
+                "ciudad": "León"
+            }
+        ],
+        "Jornada 16": [
+            {
+                "id_partido": 2016,
+                "equipo_local": "Club Deportivo Lugo",
+                "equipo_visitante": "Cultural y Deportiva Leonesa",
+                "fecha": "2026-12-13",
+                "hora_espana": "17:00",
+                "estadio": "Estadio Anxo Carro",
+                "ciudad": "Lugo"
+            }
+        ],
+        "Jornada 17": [
+            {
+                "id_partido": 2017,
+                "equipo_local": "Cultural y Deportiva Leonesa",
+                "equipo_visitante": "Real Avilés Industrial Club de Fútbol",
+                "fecha": "2026-12-20",
+                "hora_espana": "17:00",
+                "estadio": "Estadio Reino de León",
+                "ciudad": "León"
+            }
+        ],
+        "Jornada 18": [
+            {
+                "id_partido": 2018,
+                "equipo_local": "Club Deportivo Mirandés",
+                "equipo_visitante": "Cultural y Deportiva Leonesa",
+                "fecha": "2027-01-03",
+                "hora_espana": "17:00",
+                "estadio": "Estadio Municipal de Anduva",
+                "ciudad": "Miranda de Ebro"
+            }
+        ],
+        "Jornada 19": [
+            {
+                "id_partido": 2019,
+                "equipo_local": "Cultural y Deportiva Leonesa",
+                "equipo_visitante": "RC Deportivo Fabril",
+                "fecha": "2027-01-10",
+                "hora_espana": "17:00",
+                "estadio": "Estadio Reino de León",
+                "ciudad": "León"
+            }
+        ],
+        "Jornada 20": [
+            {
+                "id_partido": 2020,
+                "equipo_local": "Pontevedra Club de Fútbol",
+                "equipo_visitante": "Cultural y Deportiva Leonesa",
+                "fecha": "2027-01-17",
+                "hora_espana": "17:00",
+                "estadio": "Estadio Municipal de Pasarón",
+                "ciudad": "Pontevedra"
+            }
+        ],
+        "Jornada 21": [
+            {
+                "id_partido": 2021,
+                "equipo_local": "Cultural y Deportiva Leonesa",
+                "equipo_visitante": "Barakaldo CF",
+                "fecha": "2027-01-24",
+                "hora_espana": "17:00",
+                "estadio": "Estadio Reino de León",
+                "ciudad": "León"
+            }
+        ],
+        "Jornada 22": [
+            {
+                "id_partido": 2022,
+                "equipo_local": "Club Deportivo Coria",
+                "equipo_visitante": "Cultural y Deportiva Leonesa",
+                "fecha": "2027-01-31",
+                "hora_espana": "17:00",
+                "estadio": "Estadio La Isla",
+                "ciudad": "Coria"
+            }
+        ],
+        "Jornada 23": [
+            {
+                "id_partido": 2023,
+                "equipo_local": "Cultural y Deportiva Leonesa",
+                "equipo_visitante": "Club Deportivo Extremadura",
+                "fecha": "2027-02-07",
+                "hora_espana": "17:00",
+                "estadio": "Estadio Reino de León",
+                "ciudad": "León"
+            }
+        ],
+        "Jornada 24": [
+            {
+                "id_partido": 2024,
+                "equipo_local": "Arenas Club",
+                "equipo_visitante": "Cultural y Deportiva Leonesa",
+                "fecha": "2027-02-14",
+                "hora_espana": "17:00",
+                "estadio": "Estadio Municipal de Gobela",
+                "ciudad": "Getxo"
+            }
+        ],
+        "Jornada 25": [
+            {
+                "id_partido": 2025,
+                "equipo_local": "Cultural y Deportiva Leonesa",
+                "equipo_visitante": "Unionistas de Salamanca Club de Fútbol",
+                "fecha": "2027-02-21",
+                "hora_espana": "17:00",
+                "estadio": "Estadio Reino de León",
+                "ciudad": "León"
+            }
+        ],
+        "Jornada 26": [
+            {
+                "id_partido": 2026,
+                "equipo_local": "Zamora Club de Fútbol",
+                "equipo_visitante": "Cultural y Deportiva Leonesa",
+                "fecha": "2027-02-28",
+                "hora_espana": "17:00",
+                "estadio": "Estadio Ruta de la Plata",
+                "ciudad": "Zamora"
+            }
+        ],
+        "Jornada 27": [
+            {
+                "id_partido": 2027,
+                "equipo_local": "Cultural y Deportiva Leonesa",
+                "equipo_visitante": "Unión Deportiva Logroñés",
+                "fecha": "2027-03-07",
+                "hora_espana": "17:00",
+                "estadio": "Estadio Reino de León",
+                "ciudad": "León"
+            }
+        ],
+        "Jornada 28": [
+            {
+                "id_partido": 2028,
+                "equipo_local": "Cultural y Deportiva Leonesa",
+                "equipo_visitante": "Club Deportivo Lugo",
+                "fecha": "2027-03-14",
+                "hora_espana": "17:00",
+                "estadio": "Estadio Reino de León",
+                "ciudad": "León"
+            }
+        ],
+        "Jornada 29": [
+            {
+                "id_partido": 2029,
+                "equipo_local": "Sociedad Deportiva Ponferradina",
+                "equipo_visitante": "Cultural y Deportiva Leonesa",
+                "fecha": "2027-03-21",
+                "hora_espana": "17:00",
+                "estadio": "Estadio El Toralín",
+                "ciudad": "Ponferrada"
+            }
+        ],
+        "Jornada 30": [
+            {
+                "id_partido": 2030,
+                "equipo_local": "RC Deportivo Fabril",
+                "equipo_visitante": "Cultural y Deportiva Leonesa",
+                "fecha": "2027-03-28",
+                "hora_espana": "17:00",
+                "estadio": "Ciudad Deportiva de Abegondo",
+                "ciudad": "A Coruña"
+            }
+        ],
+        "Jornada 31": [
+            {
+                "id_partido": 2031,
+                "equipo_local": "Cultural y Deportiva Leonesa",
+                "equipo_visitante": "Unión Deportiva Ourense",
+                "fecha": "2027-04-04",
+                "hora_espana": "17:00",
+                "estadio": "Estadio Reino de León",
+                "ciudad": "León"
+            }
+        ],
+        "Jornada 32": [
+            {
+                "id_partido": 2032,
+                "equipo_local": "Real Avilés Industrial Club de Fútbol",
+                "equipo_visitante": "Cultural y Deportiva Leonesa",
+                "fecha": "2027-04-11",
+                "hora_espana": "17:00",
+                "estadio": "Estadio Román Suárez Puerta",
+                "ciudad": "Avilés"
+            }
+        ],
+        "Jornada 33": [
+            {
+                "id_partido": 2033,
+                "equipo_local": "Cultural y Deportiva Leonesa",
+                "equipo_visitante": "Real Unión Club",
+                "fecha": "2027-04-18",
+                "hora_espana": "17:00",
+                "estadio": "Estadio Reino de León",
+                "ciudad": "León"
+            }
+        ],
+        "Jornada 34": [
+            {
+                "id_partido": 2034,
+                "equipo_local": "Cultural y Deportiva Leonesa",
+                "equipo_visitante": "Club Deportivo Mirandés",
+                "fecha": "2027-04-25",
+                "hora_espana": "17:00",
+                "estadio": "Estadio Reino de León",
+                "ciudad": "León"
+            }
+        ],
+        "Jornada 35": [
+            {
+                "id_partido": 2035,
+                "equipo_local": "Asociación Deportiva Mérida",
+                "equipo_visitante": "Cultural y Deportiva Leonesa",
+                "fecha": "2027-05-02",
+                "hora_espana": "17:00",
+                "estadio": "Estadio Romano José Fouto",
+                "ciudad": "Mérida"
+            }
+        ],
+        "Jornada 36": [
+            {
+                "id_partido": 2036,
+                "equipo_local": "Cultural y Deportiva Leonesa",
+                "equipo_visitante": "Club Polideportivo Cacereño",
+                "fecha": "2027-05-09",
+                "hora_espana": "17:00",
+                "estadio": "Estadio Reino de León",
+                "ciudad": "León"
+            }
+        ],
+        "Jornada 37": [
+            {
+                "id_partido": 2037,
+                "equipo_local": "Racing Club de Ferrol",
+                "equipo_visitante": "Cultural y Deportiva Leonesa",
+                "fecha": "2027-05-16",
+                "hora_espana": "17:00",
+                "estadio": "Estadio Municipal de A Malata",
+                "ciudad": "Ferrol"
+            }
+        ],
+        "Jornada 38": [
+            {
+                "id_partido": 2038,
+                "equipo_local": "Cultural y Deportiva Leonesa",
+                "equipo_visitante": "Bilbao Athletic",
+                "fecha": "2027-05-23",
+                "hora_espana": "17:00",
+                "estadio": "Estadio Reino de León",
+                "ciudad": "León"
+            }
+        ]
+    }
+}
