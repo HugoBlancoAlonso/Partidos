@@ -1,8 +1,7 @@
 import CircularProgress from './CircularProgress';
 import './Menu.css';
 
-export default function Menu({ username, watchedCount, totalMatches, onSelectTournament, onLogout, theme, onToggleTheme }) {
-  const percentage = totalMatches > 0 ? (watchedCount / totalMatches) * 100 : 0;
+export default function Menu({ username, competitions, watchedCount, onSelectTournament, onLogout, theme, onToggleTheme }) {
 
   return (
     <div className="menu">
@@ -31,37 +30,50 @@ export default function Menu({ username, watchedCount, totalMatches, onSelectTou
       <div className="menu__content">
         <h3 className="menu__section-title animate-fade-in">Mis Competiciones</h3>
 
-        <button
-          className="menu__tournament-card animate-fade-in-up"
-          onClick={onSelectTournament}
-        >
-          <div className="menu__tournament-image">
-            <div className="menu__tournament-gradient" />
-            <div className="menu__tournament-emoji">🏆</div>
-          </div>
+        {competitions && competitions.map((comp, index) => {
+          // For now we calculate percentage based on total watched count for ALL matches 
+          // Ideally, watchedCount would be per-competition, but we leave it global for now 
+          // to match the previous behavior, or we can just pass the total_partidos.
+          const percentage = comp.total_partidos > 0 ? (watchedCount / comp.total_partidos) * 100 : 0;
+          return (
+            <button
+              key={comp.id}
+              className="menu__tournament-card animate-fade-in-up"
+              style={{ animationDelay: `${index * 50}ms` }}
+              onClick={() => onSelectTournament(comp.id)}
+            >
+              <div className="menu__tournament-image">
+                <div className="menu__tournament-gradient" />
+                <div className="menu__tournament-emoji">🏆</div>
+              </div>
 
-          <div className="menu__tournament-info">
-            <div className="menu__tournament-text">
-              <h3 className="menu__tournament-name">Mundial 2026</h3>
-              <p className="menu__tournament-location">🇺🇸 USA · 🇲🇽 México · 🇨🇦 Canadá</p>
-              <p className="menu__tournament-stats">
-                <span className="menu__tournament-watched">{watchedCount}</span>
-                <span className="menu__tournament-separator"> de </span>
-                <span>{totalMatches} partidos vistos</span>
-              </p>
-            </div>
+              <div className="menu__tournament-info">
+                <div className="menu__tournament-text">
+                  <h3 className="menu__tournament-name">{comp.name}</h3>
+                  {/* Location might need to be part of JSON, hardcoding for now if missing, or use an empty string */}
+                  <p className="menu__tournament-location">
+                    {comp.id === 'mundial2026' ? '🇺🇸 USA · 🇲🇽 México · 🇨🇦 Canadá' : '📍 ' + comp.name}
+                  </p>
+                  <p className="menu__tournament-stats">
+                    <span className="menu__tournament-watched">{watchedCount}</span>
+                    <span className="menu__tournament-separator"> de </span>
+                    <span>{comp.total_partidos} partidos vistos</span>
+                  </p>
+                </div>
 
-            <div className="menu__tournament-progress">
-              <CircularProgress percentage={percentage} size={90} strokeWidth={6} />
-            </div>
-          </div>
+                <div className="menu__tournament-progress">
+                  <CircularProgress percentage={percentage > 100 ? 100 : percentage} size={90} strokeWidth={6} />
+                </div>
+              </div>
 
-          <div className="menu__tournament-arrow">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <polyline points="9 18 15 12 9 6" />
-            </svg>
-          </div>
-        </button>
+              <div className="menu__tournament-arrow">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <polyline points="9 18 15 12 9 6" />
+                </svg>
+              </div>
+            </button>
+          );
+        })}
 
         <p className="menu__coming-soon animate-fade-in">
           Más competiciones próximamente...

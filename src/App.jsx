@@ -4,16 +4,14 @@ import { useWatchedMatches } from './hooks/useWatchedMatches';
 import Login from './components/Login';
 import Menu from './components/Menu';
 import MatchList from './components/MatchList';
-import matchData from './data/partidos.json';
+import { competitions } from './data/index.js';
 import './App.css';
-
-const TOTAL_MATCHES = matchData.total_partidos;
-const MATCHES = matchData.partidos;
 
 function App() {
   const [user, setUser] = useState(null);
   const [username, setUsername] = useState('');
   const [view, setView] = useState('menu'); // 'menu' | 'matches'
+  const [selectedCompId, setSelectedCompId] = useState(null);
   const [sessionLoading, setSessionLoading] = useState(true);
 
   const [theme, setTheme] = useState(() => {
@@ -59,6 +57,7 @@ function App() {
           setUser(null);
           setUsername('');
           setView('menu');
+          setSelectedCompId(null);
         }
       }
     );
@@ -76,6 +75,7 @@ function App() {
     setUser(null);
     setUsername('');
     setView('menu');
+    setSelectedCompId(null);
   };
 
   // Loading screen
@@ -96,15 +96,20 @@ function App() {
   }
 
   // Match list view
-  if (view === 'matches') {
+  if (view === 'matches' && selectedCompId) {
+    const activeCompetition = competitions.find(c => c.id === selectedCompId);
+    if (!activeCompetition) return <div className="app-loading">Error cargando competición</div>;
+
     return (
       <MatchList
-        matches={MATCHES}
+        competition={activeCompetition}
         watchedCount={watchedCount}
-        totalMatches={TOTAL_MATCHES}
         isWatched={isWatched}
         onToggleWatched={toggleWatched}
-        onBack={() => setView('menu')}
+        onBack={() => {
+          setView('menu');
+          setSelectedCompId(null);
+        }}
         theme={theme}
         onToggleTheme={toggleTheme}
       />
@@ -115,9 +120,12 @@ function App() {
   return (
     <Menu
       username={username}
+      competitions={competitions}
       watchedCount={watchedCount}
-      totalMatches={TOTAL_MATCHES}
-      onSelectTournament={() => setView('matches')}
+      onSelectTournament={(compId) => {
+        setSelectedCompId(compId);
+        setView('matches');
+      }}
       onLogout={handleLogout}
       theme={theme}
       onToggleTheme={toggleTheme}

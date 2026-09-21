@@ -2,8 +2,11 @@ import { useState, useMemo } from 'react';
 import MatchCard from './MatchCard';
 import './MatchList.css';
 
-export default function MatchList({ matches, watchedCount, totalMatches, isWatched, onToggleWatched, onBack, theme, onToggleTheme }) {
+export default function MatchList({ competition, watchedCount, isWatched, onToggleWatched, onBack, theme, onToggleTheme }) {
   const [activeTab, setActiveTab] = useState('grupos');
+  
+  const matches = competition.partidos;
+  const totalMatches = competition.total_partidos;
 
   const percentage = totalMatches > 0 ? (watchedCount / totalMatches) * 100 : 0;
 
@@ -115,7 +118,7 @@ export default function MatchList({ matches, watchedCount, totalMatches, isWatch
             </svg>
           </button>
           <div className="match-list__header-text" style={{ flex: 1 }}>
-            <h1 className="match-list__title">Mundial 2026</h1>
+            <h1 className="match-list__title">{competition.name}</h1>
             <p className="match-list__subtitle">{watchedCount} de {totalMatches} partidos vistos</p>
           </div>
         </div>

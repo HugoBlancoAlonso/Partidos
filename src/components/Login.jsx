@@ -123,8 +123,8 @@ export default function Login({ onLogin }) {
       <div className="login__container animate-fade-in-up">
         <div className="login__header">
           <span className="login__emoji">⚽</span>
-          <h1 className="login__title">Mundial 2026</h1>
-          <p className="login__subtitle">🇺🇸 🇲🇽 🇨🇦</p>
+          <h1 className="login__title">Mis Partidos</h1>
+          <p className="login__subtitle">🏆 Tus Competiciones</p>
           <p className="login__desc">Registra los partidos que ves con tus amigos</p>
         </div>
 
