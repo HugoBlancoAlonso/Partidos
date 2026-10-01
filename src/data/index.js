@@ -46,18 +46,23 @@ export const competitions = Object.keys(modules).map((path) => {
   }
   
   const matchIds = [];
-  function collectIds(obj) {
+  const matchDates = [];
+  function collectData(obj) {
     if (Array.isArray(obj)) {
       obj.forEach(item => {
         if (item.id_partido) matchIds.push(item.id_partido);
+        if (item.fecha && item.fecha !== 'Por definir') matchDates.push(item.fecha);
       });
     } else if (typeof obj === 'object' && obj !== null) {
       for (let key in obj) {
-        collectIds(obj[key]);
+        collectData(obj[key]);
       }
     }
   }
-  collectIds(data.partidos);
+  collectData(data.partidos);
+  
+  matchDates.sort((a, b) => new Date(b) - new Date(a));
+  const ultimaFecha = matchDates.length > 0 ? matchDates[0] : null;
   
   return {
     id: folder,
@@ -66,6 +71,7 @@ export const competitions = Object.keys(modules).map((path) => {
     total_partidos: data.total_partidos || 0,
     partidos: data.partidos || {},
     allMatchIds: matchIds,
+    ultima_fecha: ultimaFecha,
     fecha_inicio: data.fecha_inicio || data.fecha || '0000-01-01'
   };
 }).sort((a, b) => new Date(b.fecha_inicio) - new Date(a.fecha_inicio));

@@ -109,6 +109,50 @@
   padding-left: 2px;
 }
 
+/* Tabs */
+.menu__tabs {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-md);
+  margin-bottom: var(--space-lg);
+}
+
+.menu__tab {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--text-secondary);
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-base);
+}
+
+.menu__tab:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text-primary);
+}
+
+.menu__tab--active {
+  background: var(--accent-gold);
+  color: #000;
+  border-color: var(--accent-gold);
+}
+
+.menu__tab--active:hover {
+  background: var(--accent-gold);
+  color: #000;
+}
+
+.menu__empty-message {
+  text-align: center;
+  color: var(--text-muted);
+  font-size: var(--fs-sm);
+  padding: var(--space-xl) 0;
+  font-style: italic;
+}
+
 /* Tournament Card */
 .menu__tournament-card {
   width: 100%;
