@@ -65,6 +65,7 @@ export const competitions = Object.keys(modules).map((path) => {
     name: data.torneo || folder,
     total_partidos: data.total_partidos || 0,
     partidos: data.partidos || {},
-    allMatchIds: matchIds
+    allMatchIds: matchIds,
+    fecha_inicio: data.fecha_inicio || data.fecha || '0000-01-01'
   };
-});
+}).sort((a, b) => new Date(b.fecha_inicio) - new Date(a.fecha_inicio));

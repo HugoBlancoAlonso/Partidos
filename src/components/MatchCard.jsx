@@ -1,14 +1,15 @@
 import { useState } from 'react';
-import { getFlagUrl, isRealTeam } from '../data/countryFlags';
+import { getFlagUrl, isRealTeam as isRealCountry } from '../data/countryFlags';
+import { getBadgeUrl, isRealTeam as isRealClub } from '../data/teamBadges';
 import './MatchCard.css';
 
 export default function MatchCard({ match, isWatched, onToggleWatched }) {
   const [expanded, setExpanded] = useState(false);
 
-  const localFlag = getFlagUrl(match.equipo_local);
-  const visitFlag = getFlagUrl(match.equipo_visitante);
-  const localIsReal = isRealTeam(match.equipo_local);
-  const visitIsReal = isRealTeam(match.equipo_visitante);
+  const localFlag = getFlagUrl(match.equipo_local) || getBadgeUrl(match.equipo_local);
+  const visitFlag = getFlagUrl(match.equipo_visitante) || getBadgeUrl(match.equipo_visitante);
+  const localIsReal = isRealCountry(match.equipo_local) || isRealClub(match.equipo_local);
+  const visitIsReal = isRealCountry(match.equipo_visitante) || isRealClub(match.equipo_visitante);
 
   // Formatear fecha
   const formatDate = (dateStr) => {
@@ -49,6 +50,10 @@ export default function MatchCard({ match, isWatched, onToggleWatched }) {
                 src={localFlag}
                 alt={match.equipo_local}
                 loading="lazy"
+                onError={(e) => {
+                  e.target.onerror = null;
+                  e.target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(match.equipo_local)}&background=333&color=fff&rounded=true&bold=true`;
+                }}
               />
             ) : (
               <div className="match-card__flag-placeholder">⚽</div>
@@ -67,6 +72,10 @@ export default function MatchCard({ match, isWatched, onToggleWatched }) {
                 src={visitFlag}
                 alt={match.equipo_visitante}
                 loading="lazy"
+                onError={(e) => {
+                  e.target.onerror = null;
+                  e.target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(match.equipo_visitante)}&background=333&color=fff&rounded=true&bold=true`;
+                }}
               />
             ) : (
               <div className="match-card__flag-placeholder">⚽</div>

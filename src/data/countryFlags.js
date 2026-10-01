@@ -72,6 +72,11 @@ const countryFlags = {
   "Croacia": "hr",
   "Ghana": "gh",
   "Panamá": "pa",
+
+  // Liga de Naciones (no clasificados al mundial)
+  "Italia": "it",
+  "Serbia": "rs",
+  "Gales": "gb-wls",
 };
 
 /**
