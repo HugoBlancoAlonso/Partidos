@@ -1,9 +1,7 @@
-import { useState } from 'react';
 import CircularProgress from './CircularProgress';
 import './Menu.css';
 
-export default function Menu({ username, competitions, isWatched, onSelectTournament, onLogout, theme, onToggleTheme }) {
-  const [activeTab, setActiveTab] = useState('en-curso');
+export default function Menu({ username, competitions, isWatched, onSelectTournament, onLogout, theme, onToggleTheme, activeTab, onTabChange }) {
 
   // Determinar si una competición ha finalizado (ya pasó 1 día desde el último partido)
   const isCompetitionFinished = (comp) => {
@@ -51,13 +49,13 @@ export default function Menu({ username, competitions, isWatched, onSelectTourna
         <div className="menu__tabs animate-fade-in">
           <button 
             className={`menu__tab ${activeTab === 'en-curso' ? 'menu__tab--active' : ''}`}
-            onClick={() => setActiveTab('en-curso')}
+            onClick={() => onTabChange('en-curso')}
           >
             En curso
           </button>
           <button 
             className={`menu__tab ${activeTab === 'finalizadas' ? 'menu__tab--active' : ''}`}
-            onClick={() => setActiveTab('finalizadas')}
+            onClick={() => onTabChange('finalizadas')}
           >
             Finalizadas
           </button>
