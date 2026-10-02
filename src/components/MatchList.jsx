@@ -2,53 +2,18 @@ import { useState, useMemo } from 'react';
 import MatchCard from './MatchCard';
 import './MatchList.css';
 
-export default function MatchList({ competition, watchedCount, isWatched, onToggleWatched, onBack, theme, onToggleTheme }) {
+export default function MatchList({ competition, matches = [], watchedCount, isWatched, onToggleWatched, onBack, theme, onToggleTheme }) {
   const [activeTab, setActiveTab] = useState('grupos');
   
-  const matches = competition.partidos;
   const totalMatches = competition.total_partidos;
-
   const percentage = totalMatches > 0 ? (watchedCount / totalMatches) * 100 : 0;
 
-  // Aplanar el formato de JSON dinámicamente y rellenar datos faltantes
-  const flatMatches = useMemo(() => {
-    if (Array.isArray(matches)) return matches;
-    
-    let all = [];
-    const extractMatches = (obj, parentKey = null) => {
-      Object.entries(obj).forEach(([key, val]) => {
-        if (Array.isArray(val)) {
-           const faseValue = parentKey && parentKey.toLowerCase().includes('eliminatoria') 
-              ? 'Fase Eliminatoria' 
-              : (parentKey || 'Fase de Grupos');
-           const isJornada = key.toLowerCase().includes('jornada');
-           
-           val.forEach(match => {
-              const m = { ...match }; // Clonar para no mutar el estado global
-              if (!m.fase) m.fase = faseValue;
-              if (!m.jornada && isJornada) {
-                  const num = parseInt(key.replace(/\\D/g, ''));
-                  m.jornada = !isNaN(num) ? num : key;
-              }
-              if (!m.detalle_fase) m.detalle_fase = key;
-              all.push(m);
-           });
-        } else if (typeof val === 'object' && val !== null) {
-           extractMatches(val, key);
-        }
-      });
-    };
-
-    extractMatches(matches);
-    return all;
-  }, [matches]);
-
-  // Separar partidos por fase
+  // Separar partidos por fase (usando el prop matches que ya viene plano de Supabase)
   const { groupMatches, knockoutMatches } = useMemo(() => {
-    const groups = flatMatches.filter(m => m.fase !== 'Fase Eliminatoria');
-    const knockout = flatMatches.filter(m => m.fase === 'Fase Eliminatoria');
+    const groups = matches.filter(m => m.fase !== 'Fase Eliminatoria');
+    const knockout = matches.filter(m => m.fase === 'Fase Eliminatoria');
     return { groupMatches: groups, knockoutMatches: knockout };
-  }, [flatMatches]);
+  }, [matches]);
 
   const hasKnockouts = knockoutMatches.length > 0;
 
@@ -58,8 +23,8 @@ export default function MatchList({ competition, watchedCount, isWatched, onTogg
     
     // Ordenar cronológicamente (fecha y hora)
     const sorted = [...current].sort((a, b) => {
-      const dateA = new Date(`${a.fecha}T${a.hora_espana}:00`);
-      const dateB = new Date(`${b.fecha}T${b.hora_espana}:00`);
+      const dateA = new Date(`${a.fecha || '0000-01-01'}T${a.hora_espana || '00:00'}:00`);
+      const dateB = new Date(`${b.fecha || '0000-01-01'}T${b.hora_espana || '00:00'}:00`);
       return dateA - dateB;
     });
 
@@ -83,7 +48,7 @@ export default function MatchList({ competition, watchedCount, isWatched, onTogg
           sectionName = `Jornada ${jornadaNum}`;
         }
       } else {
-        sectionName = match.detalle_fase; 
+        sectionName = match.detalle_fase || 'Fase'; 
       }
 
       if (!sectionsMap[sectionName]) {
@@ -91,12 +56,15 @@ export default function MatchList({ competition, watchedCount, isWatched, onTogg
         sectionsKeys.push(sectionName);
       }
 
-      const [year, month, day] = match.fecha.split('-');
-      const dateObj = new Date(year, month - 1, day);
-      const dateStr = dateObj.toLocaleDateString('es-ES', {
-        weekday: 'long', day: 'numeric', month: 'long'
-      });
-      const dateKey = dateStr.charAt(0).toUpperCase() + dateStr.slice(1);
+      let dateKey = 'Por definir';
+      if (match.fecha) {
+        const [year, month, day] = match.fecha.split('-');
+        const dateObj = new Date(year, month - 1, day);
+        const dateStr = dateObj.toLocaleDateString('es-ES', {
+          weekday: 'long', day: 'numeric', month: 'long'
+        });
+        dateKey = dateStr.charAt(0).toUpperCase() + dateStr.slice(1);
+      }
 
       if (!sectionsMap[sectionName].datesMap[dateKey]) {
         sectionsMap[sectionName].datesMap[dateKey] = [];
@@ -105,7 +73,7 @@ export default function MatchList({ competition, watchedCount, isWatched, onTogg
       sectionsMap[sectionName].datesMap[dateKey].push(match);
     });
 
-    // Ordenar jornadas de forma estricta (Jornada 1, Jornada 2, etc.) en vez de orden cronológico estricto
+    // Ordenar jornadas de forma estricta (Jornada 1, Jornada 2, etc.)
     if (activeTab === 'grupos' || !hasKnockouts) {
       sectionsKeys.sort((a, b) => {
         const numA = parseInt(a.replace('Jornada ', ''));
@@ -119,8 +87,8 @@ export default function MatchList({ competition, watchedCount, isWatched, onTogg
   }, [activeTab, groupMatches, knockoutMatches, hasKnockouts]);
 
   // Contar vistos por tab
-  const groupWatched = groupMatches.filter(m => isWatched(m.id_partido)).length;
-  const knockoutWatched = knockoutMatches.filter(m => isWatched(m.id_partido)).length;
+  const groupWatched = groupMatches.filter(m => isWatched(m.id)).length;
+  const knockoutWatched = knockoutMatches.filter(m => isWatched(m.id)).length;
 
   return (
     <div className="match-list">
@@ -182,9 +150,9 @@ export default function MatchList({ competition, watchedCount, isWatched, onTogg
                 <div className="match-list__matches">
                   {groupedMatches[sectionKey].datesMap[dateKey].map(match => (
                     <MatchCard
-                      key={match.id_partido}
+                      key={match.id}
                       match={match}
-                      isWatched={isWatched(match.id_partido)}
+                      isWatched={isWatched(match.id)}
                       onToggleWatched={onToggleWatched}
                     />
                   ))}

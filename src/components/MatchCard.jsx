@@ -21,9 +21,14 @@ export default function MatchCard({ match, isWatched, onToggleWatched }) {
     });
   };
 
-  // Comprobar si el partido ya se ha jugado (hora España UTC+2)
-  const matchDateStr = `${match.fecha}T${match.hora_espana}:00+02:00`;
-  const hasPassed = new Date() >= new Date(matchDateStr);
+  let hasPassed = false;
+  if (match.fecha && match.hora_espana && match.fecha !== 'Por definir' && match.hora_espana !== 'Por definir') {
+    const matchDateStr = `${match.fecha}T${match.hora_espana.padStart(5, '0')}:00+02:00`;
+    const matchDate = new Date(matchDateStr);
+    if (!isNaN(matchDate.getTime())) {
+      hasPassed = new Date() >= matchDate;
+    }
+  }
 
   const handleToggle = (e) => {
     e.stopPropagation();
@@ -31,7 +36,7 @@ export default function MatchCard({ match, isWatched, onToggleWatched }) {
       alert('¡Este partido todavía no se ha jugado! ⏳');
       return;
     }
-    onToggleWatched(match.id_partido);
+    onToggleWatched(match.id);
   };
 
   return (
