@@ -2,3 +2,4 @@
 - Crear script local para añadir competiciones.
 - Anuncios.
 - Cuentas de admin, desarrollador, etc (privilegios).
+- Estetica.
