@@ -1,0 +1,103 @@
+.bottom-nav-wrapper {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  padding: 0 16px;
+  padding-bottom: calc(24px + env(safe-area-inset-bottom));
+  pointer-events: none;
+}
+
+.bottom-nav {
+  position: relative;
+  display: flex;
+  width: 100%;
+  max-width: 400px;
+  height: 64px;
+  /* Completamente transparente para que se vea el fondo negro */
+  background-color: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 32px;
+  pointer-events: auto;
+  overflow: hidden;
+}
+
+[data-theme="light"] .bottom-nav {
+  background-color: transparent;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+/* Contenedor invisible que se mueve */
+.bottom-nav__active-indicator {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 33.333%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 0;
+}
+
+/* La pastilla visual real (más pequeña que el 33% del ancho para no chocar) */
+.bottom-nav__active-indicator-inner {
+  width: 70%;
+  height: 70%;
+  background-color: rgba(255, 255, 255, 0.12);
+  border-radius: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="light"] .bottom-nav__active-indicator-inner {
+  background-color: rgba(0, 0, 0, 0.06);
+}
+
+.bottom-nav__item {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.bottom-nav__content-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  color: var(--text-secondary);
+  transition: color 0.3s ease;
+}
+
+.bottom-nav__content-wrapper--active {
+  color: var(--text-primary);
+}
+
+.bottom-nav__icon {
+  font-size: 1.3rem;
+  filter: grayscale(100%);
+  opacity: 0.6;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.bottom-nav__content-wrapper--active .bottom-nav__icon {
+  filter: grayscale(0%);
+  opacity: 1;
+  transform: translateY(-2px);
+}
+
+.bottom-nav__text {
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}

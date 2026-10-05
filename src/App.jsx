@@ -1,22 +1,52 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
+import { Routes, Route, Navigate, useNavigate, useParams } from 'react-router-dom';
 import { supabase } from './supabaseClient';
 import { useWatchedMatches } from './hooks/useWatchedMatches';
 import Login from './components/Login';
 import Menu from './components/Menu';
 import MatchList from './components/MatchList';
+import Layout from './components/Layout';
+import Explore from './components/Explore';
+import Profile from './components/Profile';
 import './App.css';
 
+// Componente Wrapper para extraer ID de la URL y renderizar MatchList
+function MatchListWrapper({ enrichedCompetitions, dbMatches, isWatched, toggleWatched, theme, toggleTheme }) {
+  const { id } = useParams();
+  const navigate = useNavigate();
+  
+  const activeCompetition = enrichedCompetitions.find(c => c.id.toString() === id);
+
+  if (!activeCompetition) return <div className="app-loading">Competición no encontrada</div>;
+
+  const compWatchedCount = activeCompetition.allMatchIds.filter(matchId => isWatched(matchId)).length;
+  const activeMatches = dbMatches.filter(m => m.competition_id === activeCompetition.id);
+
+  return (
+    <MatchList
+      competition={activeCompetition}
+      matches={activeMatches}
+      watchedCount={compWatchedCount}
+      isWatched={isWatched}
+      onToggleWatched={toggleWatched}
+      onBack={() => navigate(-1)} // Volver atrás en el historial
+      theme={theme}
+      onToggleTheme={toggleTheme}
+    />
+  );
+}
+
 function App() {
+  const navigate = useNavigate();
   const [user, setUser] = useState(null);
   const [username, setUsername] = useState('');
-  const [view, setView] = useState('menu'); // 'menu' | 'matches'
-  const [menuTab, setMenuTab] = useState('en-curso'); // 'en-curso' | 'finalizadas'
-  const [selectedCompId, setSelectedCompId] = useState(null);
+  const [menuTab, setMenuTab] = useState('en-curso');
   const [sessionLoading, setSessionLoading] = useState(true);
   const [dataLoading, setDataLoading] = useState(true);
   
   const [dbCompetitions, setDbCompetitions] = useState([]);
   const [dbMatches, setDbMatches] = useState([]);
+  const [followedCompIds, setFollowedCompIds] = useState([]);
 
   const [theme, setTheme] = useState(() => {
     return localStorage.getItem('app-theme') || 'dark';
@@ -47,6 +77,27 @@ function App() {
     loadDatabaseData();
   }, []);
 
+  // Función para cargar competiciones seguidas
+  const loadFollowedCompetitions = useCallback(async (userId) => {
+    if (!userId) return;
+    const { data, error } = await supabase
+      .from('user_competitions')
+      .select('competition_id')
+      .eq('user_id', userId);
+    
+    if (data && !error) {
+      setFollowedCompIds(data.map(d => d.competition_id));
+    }
+  }, []);
+
+  useEffect(() => {
+    if (user) {
+      loadFollowedCompetitions(user.id);
+    } else {
+      setFollowedCompIds([]);
+    }
+  }, [user, loadFollowedCompetitions]);
+
   // Verificar sesión existente al cargar
   useEffect(() => {
     const checkSession = async () => {
@@ -72,26 +123,22 @@ function App() {
         if (event === 'SIGNED_OUT') {
           setUser(null);
           setUsername('');
-          setView('menu');
-          setSelectedCompId(null);
+          navigate('/login');
         }
       }
     );
 
     return () => subscription.unsubscribe();
-  }, []);
+  }, [navigate]);
 
   const handleLogin = (user, name) => {
     setUser(user);
     setUsername(name);
+    navigate('/');
   };
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
-    setUser(null);
-    setUsername('');
-    setView('menu');
-    setSelectedCompId(null);
   };
 
   if (sessionLoading || dataLoading) {
@@ -103,10 +150,6 @@ function App() {
         </div>
       </div>
     );
-  }
-
-  if (!user) {
-    return <Login onLogin={handleLogin} />;
   }
 
   // Preparamos las competiciones con sus correspondientes IDs de partidos para el Menu
@@ -127,46 +170,83 @@ function App() {
     };
   });
 
-  if (view === 'matches' && selectedCompId) {
-    const activeCompetition = enrichedCompetitions.find(c => c.id === selectedCompId);
-    if (!activeCompetition) return <div className="app-loading">Error cargando competición</div>;
-
-    const compWatchedCount = activeCompetition.allMatchIds.filter(id => isWatched(id)).length;
-    // Pasamos solo los partidos de esta competición
-    const activeMatches = dbMatches.filter(m => m.competition_id === selectedCompId);
-
-    return (
-      <MatchList
-        competition={activeCompetition}
-        matches={activeMatches}
-        watchedCount={compWatchedCount}
-        isWatched={isWatched}
-        onToggleWatched={toggleWatched}
-        onBack={() => {
-          setView('menu');
-          setSelectedCompId(null);
-        }}
-        theme={theme}
-        onToggleTheme={toggleTheme}
-      />
-    );
-  }
+  // Filtramos solo las que el usuario sigue para el Home
+  const myCompetitions = enrichedCompetitions.filter(comp => followedCompIds.includes(comp.id));
 
   return (
-    <Menu
-      username={username}
-      competitions={enrichedCompetitions}
-      isWatched={isWatched}
-      onSelectTournament={(compId) => {
-        setSelectedCompId(compId);
-        setView('matches');
-      }}
-      onLogout={handleLogout}
-      theme={theme}
-      onToggleTheme={toggleTheme}
-      activeTab={menuTab}
-      onTabChange={setMenuTab}
-    />
+    <Routes>
+      <Route 
+        path="/login" 
+        element={user ? <Navigate to="/" replace /> : <Login onLogin={handleLogin} />} 
+      />
+      
+      {/* Rutas Principales Envueltas en el Layout con el BottomNav */}
+      <Route element={user ? <Layout /> : <Navigate to="/login" replace />}>
+        
+        {/* Mis Competiciones (Menu original filtrado) */}
+        <Route 
+          path="/" 
+          element={
+            <Menu
+              username={username}
+              competitions={myCompetitions}
+              isWatched={isWatched}
+              onSelectTournament={(compId) => navigate(`/competition/${compId}`)}
+              onLogout={handleLogout}
+              theme={theme}
+              onToggleTheme={toggleTheme}
+              activeTab={menuTab}
+              onTabChange={setMenuTab}
+            />
+          } 
+        />
+
+        {/* Explorar (Todas las competiciones y botones de seguir) */}
+        <Route 
+          path="/explore" 
+          element={
+            <Explore 
+              competitions={enrichedCompetitions}
+              followedIds={followedCompIds}
+              user={user}
+              onFollowedChange={() => loadFollowedCompetitions(user.id)}
+            />
+          } 
+        />
+
+        {/* Perfil del Usuario */}
+        <Route 
+          path="/profile" 
+          element={
+            <Profile 
+              username={username}
+              onLogout={handleLogout}
+            />
+          } 
+        />
+      </Route>
+      
+      {/* Detalle de partidos (Sin BottomNav) */}
+      <Route 
+        path="/competition/:id" 
+        element={
+          user ? (
+            <MatchListWrapper 
+              enrichedCompetitions={enrichedCompetitions}
+              dbMatches={dbMatches}
+              isWatched={isWatched}
+              toggleWatched={toggleWatched}
+              theme={theme}
+              toggleTheme={toggleTheme}
+            />
+          ) : (
+            <Navigate to="/login" replace />
+          )
+        } 
+      />
+      
+      <Route path="*" element={<Navigate to="/" replace />} />
+    </Routes>
   );
 }
 
