@@ -1,7 +1,9 @@
+import { useNavigate } from 'react-router-dom';
 import CircularProgress from './CircularProgress';
 import './Menu.css';
 
 export default function Menu({ username, competitions, isWatched, onSelectTournament, onLogout, theme, onToggleTheme, activeTab, onTabChange }) {
+  const navigate = useNavigate();
 
   // Determinar si una competición ha finalizado (ya pasó 1 día desde el último partido)
   const isCompetitionFinished = (comp) => {
@@ -24,28 +26,11 @@ export default function Menu({ username, competitions, isWatched, onSelectTourna
       <div className="menu__bg-glow menu__bg-glow--1" />
       <div className="menu__bg-glow menu__bg-glow--2" />
 
-      <header className="menu__header animate-fade-in">
-        <div className="menu__greeting">
-          <span className="menu__wave">👋</span>
-          <div>
-            <p className="menu__hello">Hola,</p>
-            <h2 className="menu__username">{username}</h2>
-          </div>
-        </div>
-        <div style={{ display: 'flex', gap: '8px' }}>
-          <button className="menu__logout" onClick={onLogout} title="Cerrar sesión">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
-              <polyline points="16 17 21 12 16 7" />
-              <line x1="21" y1="12" x2="9" y2="12" />
-            </svg>
-          </button>
-        </div>
+      <header className="menu__header animate-fade-in" style={{ justifyContent: 'center' }}>
+        <h2 className="menu__username">Mis Competiciones</h2>
       </header>
 
       <div className="menu__content">
-        <h3 className="menu__section-title animate-fade-in">Mis Competiciones</h3>
-
         <div className="menu__tabs animate-fade-in">
           <button 
             className={`menu__tab ${activeTab === 'en-curso' ? 'menu__tab--active' : ''}`}
@@ -105,14 +90,29 @@ export default function Menu({ username, competitions, isWatched, onSelectTourna
             );
           })
         ) : (
-          <p className="menu__empty-message animate-fade-in">
-            No hay competiciones {activeTab === 'en-curso' ? 'en curso' : 'finalizadas'}.
-          </p>
+          <div className="menu__empty-message animate-fade-in" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1.5rem', marginTop: '3rem' }}>
+            <p style={{ margin: 0 }}>No hay competiciones {activeTab === 'en-curso' ? 'en curso' : 'finalizadas'}.</p>
+            {activeTab === 'en-curso' && (
+              <button 
+                onClick={() => navigate('/explore')}
+                style={{
+                  padding: '12px 24px',
+                  borderRadius: '16px',
+                  border: 'none',
+                  backgroundColor: 'var(--accent-gold)',
+                  color: '#000',
+                  fontWeight: '700',
+                  fontSize: '0.95rem',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s ease',
+                  boxShadow: '0 4px 12px rgba(196, 168, 79, 0.2)'
+                }}
+              >
+                Seguir nuevas competiciones
+              </button>
+            )}
+          </div>
         )}
-
-        <p className="menu__coming-soon animate-fade-in">
-          Más competiciones próximamente...
-        </p>
       </div>
     </div>
   );
