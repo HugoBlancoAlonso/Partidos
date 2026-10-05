@@ -1,5 +1,5 @@
 - Añadir competiciones.
 - Crear script local para añadir competiciones.
 - Anuncios.
-- Cuentas de admin, desarrollador, etc (privilegios).
+- Añadir opcion de subir json desde la app y que se suba a la base de datos.
 - Estetica.
