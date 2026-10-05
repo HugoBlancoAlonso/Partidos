@@ -1,10 +1,13 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Routes, Route, Navigate, useNavigate, useParams } from 'react-router-dom';
 import { supabase } from './supabaseClient';
 import { useWatchedMatches } from './hooks/useWatchedMatches';
 import Login from './components/Login';
 import Menu from './components/Menu';
 import MatchList from './components/MatchList';
+import Layout from './components/Layout';
+import Explore from './components/Explore';
+import Profile from './components/Profile';
 import './App.css';
 
 // Componente Wrapper para extraer ID de la URL y renderizar MatchList
@@ -26,7 +29,7 @@ function MatchListWrapper({ enrichedCompetitions, dbMatches, isWatched, toggleWa
       watchedCount={compWatchedCount}
       isWatched={isWatched}
       onToggleWatched={toggleWatched}
-      onBack={() => navigate('/')}
+      onBack={() => navigate(-1)} // Volver atrás en el historial
       theme={theme}
       onToggleTheme={toggleTheme}
     />
@@ -37,12 +40,13 @@ function App() {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
   const [username, setUsername] = useState('');
-  const [menuTab, setMenuTab] = useState('en-curso'); // 'en-curso' | 'finalizadas'
+  const [menuTab, setMenuTab] = useState('en-curso');
   const [sessionLoading, setSessionLoading] = useState(true);
   const [dataLoading, setDataLoading] = useState(true);
   
   const [dbCompetitions, setDbCompetitions] = useState([]);
   const [dbMatches, setDbMatches] = useState([]);
+  const [followedCompIds, setFollowedCompIds] = useState([]);
 
   const [theme, setTheme] = useState(() => {
     return localStorage.getItem('app-theme') || 'dark';
@@ -72,6 +76,27 @@ function App() {
     };
     loadDatabaseData();
   }, []);
+
+  // Función para cargar competiciones seguidas
+  const loadFollowedCompetitions = useCallback(async (userId) => {
+    if (!userId) return;
+    const { data, error } = await supabase
+      .from('user_competitions')
+      .select('competition_id')
+      .eq('user_id', userId);
+    
+    if (data && !error) {
+      setFollowedCompIds(data.map(d => d.competition_id));
+    }
+  }, []);
+
+  useEffect(() => {
+    if (user) {
+      loadFollowedCompetitions(user.id);
+    } else {
+      setFollowedCompIds([]);
+    }
+  }, [user, loadFollowedCompetitions]);
 
   // Verificar sesión existente al cargar
   useEffect(() => {
@@ -145,6 +170,9 @@ function App() {
     };
   });
 
+  // Filtramos solo las que el usuario sigue para el Home
+  const myCompetitions = enrichedCompetitions.filter(comp => followedCompIds.includes(comp.id));
+
   return (
     <Routes>
       <Route 
@@ -152,13 +180,16 @@ function App() {
         element={user ? <Navigate to="/" replace /> : <Login onLogin={handleLogin} />} 
       />
       
-      <Route 
-        path="/" 
-        element={
-          user ? (
+      {/* Rutas Principales Envueltas en el Layout con el BottomNav */}
+      <Route element={user ? <Layout /> : <Navigate to="/login" replace />}>
+        
+        {/* Mis Competiciones (Menu original filtrado) */}
+        <Route 
+          path="/" 
+          element={
             <Menu
               username={username}
-              competitions={enrichedCompetitions}
+              competitions={myCompetitions}
               isWatched={isWatched}
               onSelectTournament={(compId) => navigate(`/competition/${compId}`)}
               onLogout={handleLogout}
@@ -167,12 +198,35 @@ function App() {
               activeTab={menuTab}
               onTabChange={setMenuTab}
             />
-          ) : (
-            <Navigate to="/login" replace />
-          )
-        } 
-      />
+          } 
+        />
+
+        {/* Explorar (Todas las competiciones y botones de seguir) */}
+        <Route 
+          path="/explore" 
+          element={
+            <Explore 
+              competitions={enrichedCompetitions}
+              followedIds={followedCompIds}
+              user={user}
+              onFollowedChange={() => loadFollowedCompetitions(user.id)}
+            />
+          } 
+        />
+
+        {/* Perfil del Usuario */}
+        <Route 
+          path="/profile" 
+          element={
+            <Profile 
+              username={username}
+              onLogout={handleLogout}
+            />
+          } 
+        />
+      </Route>
       
+      {/* Detalle de partidos (Sin BottomNav) */}
       <Route 
         path="/competition/:id" 
         element={
