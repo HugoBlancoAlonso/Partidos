@@ -1,9 +1,31 @@
 import { useState, useMemo } from 'react';
+import { supabase } from '../supabaseClient';
 import MatchCard from './MatchCard';
 import './MatchList.css';
 
-export default function MatchList({ competition, matches = [], watchedCount, isWatched, onToggleWatched, onBack, theme, onToggleTheme }) {
+export default function MatchList({ competition, matches = [], watchedCount, isWatched, onToggleWatched, onBack, theme, onToggleTheme, user, onUnfollow }) {
   const [activeTab, setActiveTab] = useState('grupos');
+  const [loadingUnfollow, setLoadingUnfollow] = useState(false);
+
+  const handleUnfollow = async () => {
+    if (!window.confirm(`¿Dejar de seguir ${competition.name}?`)) return;
+    setLoadingUnfollow(true);
+    try {
+      if (user) {
+        await supabase
+          .from('user_competitions')
+          .delete()
+          .eq('user_id', user.id)
+          .eq('competition_id', competition.id);
+        
+        if (onUnfollow) onUnfollow();
+      }
+      onBack();
+    } catch (error) {
+      console.error("Error unfollowing", error);
+    }
+    setLoadingUnfollow(false);
+  };
   
   const totalMatches = competition.total_partidos;
   const percentage = totalMatches > 0 ? (watchedCount / totalMatches) * 100 : 0;
@@ -104,6 +126,35 @@ export default function MatchList({ competition, matches = [], watchedCount, isW
             <h1 className="match-list__title">{competition.name}</h1>
             <p className="match-list__subtitle">{watchedCount} de {totalMatches} partidos vistos</p>
           </div>
+          
+          <button 
+            className="match-list__unfollow-btn"
+            onClick={handleUnfollow}
+            disabled={loadingUnfollow}
+            title="Dejar de seguir competición"
+            style={{
+              background: 'rgba(255, 59, 48, 0.1)',
+              border: 'none',
+              borderRadius: '50%',
+              width: '40px',
+              height: '40px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              color: '#ff3b30',
+              cursor: 'pointer',
+              marginLeft: '12px',
+              transition: 'all 0.2s ease',
+              opacity: loadingUnfollow ? 0.5 : 1
+            }}
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <polyline points="3 6 5 6 21 6"></polyline>
+              <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+              <line x1="10" y1="11" x2="10" y2="17"></line>
+              <line x1="14" y1="11" x2="14" y2="17"></line>
+            </svg>
+          </button>
         </div>
 
         {/* Tabs inside unified header */}

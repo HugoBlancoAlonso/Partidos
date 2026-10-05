@@ -11,7 +11,7 @@ import Profile from './components/Profile';
 import './App.css';
 
 // Componente Wrapper para extraer ID de la URL y renderizar MatchList
-function MatchListWrapper({ enrichedCompetitions, dbMatches, isWatched, toggleWatched, theme, toggleTheme }) {
+function MatchListWrapper({ enrichedCompetitions, dbMatches, isWatched, toggleWatched, theme, toggleTheme, user, onFollowedChange }) {
   const { id } = useParams();
   const navigate = useNavigate();
   
@@ -32,6 +32,8 @@ function MatchListWrapper({ enrichedCompetitions, dbMatches, isWatched, toggleWa
       onBack={() => navigate(-1)} // Volver atrás en el historial
       theme={theme}
       onToggleTheme={toggleTheme}
+      user={user}
+      onUnfollow={onFollowedChange}
     />
   );
 }
@@ -238,6 +240,8 @@ function App() {
               toggleWatched={toggleWatched}
               theme={theme}
               toggleTheme={toggleTheme}
+              user={user}
+              onFollowedChange={() => loadFollowedCompetitions(user.id)}
             />
           ) : (
             <Navigate to="/login" replace />
