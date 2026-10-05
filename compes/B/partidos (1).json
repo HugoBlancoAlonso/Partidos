@@ -1,0 +1,139 @@
+{
+    "torneo": "Liga de Naciones de la UEFA 2026-27",
+    "fecha_inicio": "2026-09-24",
+    "total_partidos": 10,
+    "partidos": {
+        "Fase de Grupos": {
+            "Jornada 1": [
+                {
+                    "id_partido": 1,
+                    "fase": "Fase de Grupos",
+                    "jornada": 1,
+                    "detalle_fase": "Liga A - Grupo C",
+                    "equipo_local": "Inglaterra",
+                    "equipo_visitante": "España",
+                    "fecha": "Por definir",
+                    "hora_espana": "Por definir",
+                    "estadio": "Por definir",
+                    "ciudad": "Por definir"
+                }
+            ],
+            "Jornada 2": [
+                {
+                    "id_partido": 2,
+                    "fase": "Fase de Grupos",
+                    "jornada": 2,
+                    "detalle_fase": "Liga A - Grupo C",
+                    "equipo_local": "España",
+                    "equipo_visitante": "Croacia",
+                    "fecha": "2026-09-29",
+                    "hora_espana": "20:45",
+                    "estadio": "Estadio Ramón Sánchez-Pizjuán",
+                    "ciudad": "Sevilla"
+                }
+            ],
+            "Jornada 3": [
+                {
+                    "id_partido": 3,
+                    "fase": "Fase de Grupos",
+                    "jornada": 3,
+                    "detalle_fase": "Liga A - Grupo C",
+                    "equipo_local": "España",
+                    "equipo_visitante": "República Checa",
+                    "fecha": "2026-10-03",
+                    "hora_espana": "20:45",
+                    "estadio": "Estadio Carlos Tartiere",
+                    "ciudad": "Oviedo"
+                }
+            ],
+            "Jornada 4": [
+                {
+                    "id_partido": 4,
+                    "fase": "Fase de Grupos",
+                    "jornada": 4,
+                    "detalle_fase": "Liga A - Grupo C",
+                    "equipo_local": "España",
+                    "equipo_visitante": "Inglaterra",
+                    "fecha": "Por definir",
+                    "hora_espana": "Por definir",
+                    "estadio": "Por definir",
+                    "ciudad": "Por definir"
+                }
+            ],
+            "Jornada 5": [
+                {
+                    "id_partido": 5,
+                    "fase": "Fase de Grupos",
+                    "jornada": 5,
+                    "detalle_fase": "Liga A - Grupo C",
+                    "equipo_local": "Croacia",
+                    "equipo_visitante": "España",
+                    "fecha": "Por definir",
+                    "hora_espana": "Por definir",
+                    "estadio": "Por definir",
+                    "ciudad": "Por definir"
+                }
+            ],
+            "Jornada 6": [
+                {
+                    "id_partido": 6,
+                    "fase": "Fase de Grupos",
+                    "jornada": 6,
+                    "detalle_fase": "Liga A - Grupo C",
+                    "equipo_local": "República Checa",
+                    "equipo_visitante": "España",
+                    "fecha": "Por definir",
+                    "hora_espana": "Por definir",
+                    "estadio": "Por definir",
+                    "ciudad": "Por definir"
+                }
+            ]
+        },
+        "Fase Eliminatoria": [
+            {
+                "id_partido": 7,
+                "fase": "Fase Eliminatoria",
+                "detalle_fase": "Cuartos de Final - Ida",
+                "equipo_local": "Por definir",
+                "equipo_visitante": "Por definir",
+                "fecha": "Por definir",
+                "hora_espana": "Por definir",
+                "estadio": "Por definir",
+                "ciudad": "Por definir"
+            },
+            {
+                "id_partido": 8,
+                "fase": "Fase Eliminatoria",
+                "detalle_fase": "Cuartos de Final - Vuelta",
+                "equipo_local": "Por definir",
+                "equipo_visitante": "Por definir",
+                "fecha": "Por definir",
+                "hora_espana": "Por definir",
+                "estadio": "Por definir",
+                "ciudad": "Por definir"
+            },
+            {
+                "id_partido": 9,
+                "fase": "Fase Eliminatoria",
+                "detalle_fase": "Semifinal",
+                "equipo_local": "Por definir",
+                "equipo_visitante": "Por definir",
+                "fecha": "Por definir",
+                "hora_espana": "Por definir",
+                "estadio": "Por definir",
+                "ciudad": "Por definir"
+            },
+            {
+                "id_partido": 10,
+                "fase": "Fase Eliminatoria",
+                "detalle_fase": "Final",
+                "equipo_local": "Por definir",
+                "equipo_visitante": "Por definir",
+                "fecha": "Por definir",
+                "hora_espana": "Por definir",
+                "estadio": "Por definir",
+                "ciudad": "Por definir"
+            }
+        ]
+    }
+}

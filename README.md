@@ -1,6 +1,16 @@
 # Seguimiento de Partidos (Football Matches Tracker)
 
+> [!WARNING]
+> **Esta web se encuentra actualmente en desarrollo.**
+
 Esta aplicación web te permite llevar un registro de todos los partidos de fútbol que has visto en diferentes competiciones. Está desarrollada utilizando React y Vite en el frontend, y utiliza Supabase como backend para la autenticación de usuarios y el almacenamiento de datos.
+
+## 📋 Por hacer (TODO)
+- Añadir competiciones.
+- Habilitar opción de poder seguir las competiciones que quieras.
+- Crear script local para añadir competiciones.
+- Anuncios.
+- Cuentas de admin, desarrollador, etc (privilegios).
 
 ## ¿Cómo funciona la aplicación?
 
@@ -17,6 +27,23 @@ La aplicación se divide en las siguientes características principales:
 
 4. **Modo Claro / Oscuro:**
    La aplicación incluye un botón (generalmente un icono de sol/luna) para alternar entre el tema claro (Light Mode) y el tema oscuro (Dark Mode). Tu preferencia de tema se almacena en el navegador para mantenerse en tus futuras visitas.
+
+---
+
+## 🛠️ Arquitectura Técnica
+
+### Frontend (React + Vite)
+El frontend está construido con **React** y empaquetado mediante **Vite**. Su estructura es modular y se centra en componentes funcionales (`src/components/`):
+- **App.jsx:** Componente principal que gestiona el estado global (sesión de usuario, carga inicial de competiciones y partidos, tema claro/oscuro) y coordina la navegación de vistas.
+- **Hooks personalizados (`src/hooks/`):** Como `useWatchedMatches`, encargado de leer y actualizar los partidos que ha visto el usuario implementando "optimistic updates" para una experiencia instantánea.
+- **Componentes de interfaz:** Interfaces divididas en piezas reutilizables como `Login`, `Menu`, `MatchList`, `MatchCard` o `CircularProgress`, cada uno con su archivo de estilos (Vanilla CSS).
+
+### Backend y Base de Datos (Supabase)
+Toda la lógica de backend y base de datos se maneja a través de **Supabase** (PostgreSQL + Autenticación). La estructura de datos cuenta con las siguientes tablas principales:
+- **`profiles`:** Guarda perfiles de usuarios (ej. nombre de usuario) vinculados a su ID de registro.
+- **`competitions`:** Información general de cada torneo o liga (fecha de inicio, total de partidos, etc.).
+- **`matches`:** El detalle individual de los encuentros, conectados a su torneo mediante `competition_id`.
+- **`watched_matches`:** Tabla puente o relacional que vincula un `user_id` y un `match_id`. Se encarga de guardar el progreso personal de lo que cada usuario ha marcado como "visto".
 
 ---
 
