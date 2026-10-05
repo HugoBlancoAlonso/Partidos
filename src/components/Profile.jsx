@@ -1,6 +1,8 @@
 import './Menu.css';
 
-export default function Profile({ username, onLogout }) {
+export default function Profile({ user, username, onLogout }) {
+  const isAdmin = user?.role === 1;
+
   return (
     <div className="menu">
       <div className="menu__bg-glow menu__bg-glow--1" />

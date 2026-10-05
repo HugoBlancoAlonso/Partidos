@@ -9,7 +9,7 @@
 
 /* Background glows */
 .menu__bg-glow {
-  position: absolute;
+  position: fixed;
   border-radius: 50%;
   filter: blur(100px);
   pointer-events: none;

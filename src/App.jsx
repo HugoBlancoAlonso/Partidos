@@ -108,11 +108,11 @@ function App() {
       if (session?.user) {
         const { data: profile } = await supabase
           .from('profiles')
-          .select('username')
+          .select('username, role')
           .eq('id', session.user.id)
           .single();
 
-        setUser(session.user);
+        setUser({ ...session.user, role: profile?.role || 2 });
         setUsername(profile?.username || 'usuario');
       }
       setSessionLoading(false);
@@ -133,8 +133,8 @@ function App() {
     return () => subscription.unsubscribe();
   }, [navigate]);
 
-  const handleLogin = (user, name) => {
-    setUser(user);
+  const handleLogin = (user, name, role) => {
+    setUser({ ...user, role: role || 2 });
     setUsername(name);
     navigate('/');
   };
@@ -221,6 +221,7 @@ function App() {
           path="/profile" 
           element={
             <Profile 
+              user={user}
               username={username}
               onLogout={handleLogout}
             />

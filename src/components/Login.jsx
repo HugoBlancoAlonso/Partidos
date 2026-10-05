@@ -77,13 +77,14 @@ export default function Login({ onLogin }) {
             .insert({
               id: data.user.id,
               username: trimmedUsername.toLowerCase(),
+              role: 2
             });
 
           if (profileError) {
             console.error('Error creando perfil:', profileError);
           }
 
-          onLogin(data.user, trimmedUsername.toLowerCase());
+          onLogin(data.user, trimmedUsername.toLowerCase(), 2);
         }
       } else {
         // Iniciar sesión
@@ -101,11 +102,11 @@ export default function Login({ onLogin }) {
         // Obtener username del perfil
         const { data: profile } = await supabase
           .from('profiles')
-          .select('username')
+          .select('username, role')
           .eq('id', data.user.id)
           .single();
 
-        onLogin(data.user, profile?.username || trimmedUsername.toLowerCase());
+        onLogin(data.user, profile?.username || trimmedUsername.toLowerCase(), profile?.role);
       }
     } catch (err) {
       setError('Error de conexión. Inténtalo de nuevo.');
