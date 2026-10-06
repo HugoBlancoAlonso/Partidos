@@ -1,10 +1,13 @@
 import './CircularProgress.css';
 
-export default function CircularProgress({ percentage, size = 120, strokeWidth = 8 }) {
+export default function CircularProgress({ percentage, size = 120, strokeWidth = 8, textColor, trackColor }) {
   const radius = (size - strokeWidth) / 2;
   const circumference = 2 * Math.PI * radius;
   const offset = circumference - (percentage / 100) * circumference;
   const center = size / 2;
+
+  const resolvedTextColor = textColor || 'var(--text-primary)';
+  const resolvedTrackColor = trackColor || 'rgba(255, 255, 255, 0.06)';
 
   return (
     <div className="circular-progress" style={{ width: size, height: size }}>
@@ -22,6 +25,7 @@ export default function CircularProgress({ percentage, size = 120, strokeWidth =
           cy={center}
           r={radius}
           strokeWidth={strokeWidth}
+          style={{ stroke: resolvedTrackColor }}
         />
         {/* Progress circle */}
         <circle
@@ -36,8 +40,8 @@ export default function CircularProgress({ percentage, size = 120, strokeWidth =
         />
       </svg>
       <div className="circular-progress__text">
-        <span className="circular-progress__percentage">{Math.round(percentage)}</span>
-        <span className="circular-progress__symbol">%</span>
+        <span className="circular-progress__percentage" style={{ color: resolvedTextColor, fontSize: size < 80 ? '1rem' : '1.8rem' }}>{Math.round(percentage)}</span>
+        <span className="circular-progress__symbol" style={{ color: resolvedTextColor, fontSize: size < 80 ? '0.7rem' : '0.9rem' }}>%</span>
       </div>
     </div>
   );

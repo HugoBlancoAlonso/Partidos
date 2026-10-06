@@ -47,48 +47,52 @@ export default function Menu({ username, competitions, isWatched, onSelectTourna
         </div>
 
         {filteredCompetitions.length > 0 ? (
-          filteredCompetitions.map((comp, index) => {
-            const compWatchedCount = comp.allMatchIds ? comp.allMatchIds.filter(id => isWatched(id)).length : 0;
-            const percentage = comp.total_partidos > 0 ? (compWatchedCount / comp.total_partidos) * 100 : 0;
-            
-            return (
-              <button
-                key={comp.id}
-                className="menu__tournament-card animate-fade-in-up"
-                style={{ animationDelay: `${index * 50}ms` }}
-                onClick={() => onSelectTournament(comp.id)}
-              >
-                <div className="menu__tournament-image">
-                  <div className="menu__tournament-gradient" />
-                  <div className="menu__tournament-emoji">🏆</div>
-                </div>
+          <div className="menu__grid animate-fade-in">
+            {filteredCompetitions.map((comp, index) => {
+              const compWatchedCount = comp.allMatchIds ? comp.allMatchIds.filter(id => isWatched(id)).length : 0;
+              const percentage = comp.total_partidos > 0 ? (compWatchedCount / comp.total_partidos) * 100 : 0;
+              
+              // Generar un color pastel consistente basado en el nombre de la competición
+              let hash = 0;
+              for (let i = 0; i < comp.name.length; i++) {
+                hash = comp.name.charCodeAt(i) + ((hash << 5) - hash);
+              }
+              const h = Math.abs(hash) % 360;
+              // Saturación media (60-70%), luminosidad alta (85%) para tonos pastel
+              const bgColor = `hsl(${h}, 65%, 85%)`;
 
-                <div className="menu__tournament-info">
-                  <div className="menu__tournament-text">
-                    <h3 className="menu__tournament-name">{comp.name}</h3>
-                    <p className="menu__tournament-location">
-                      {comp.id === 'mundial2026' ? '🇺🇸 USA · 🇲🇽 México · 🇨🇦 Canadá' : '📍 ' + comp.name}
-                    </p>
-                    <p className="menu__tournament-stats">
-                      <span className="menu__tournament-watched">{compWatchedCount}</span>
-                      <span className="menu__tournament-separator"> de </span>
-                      <span>{comp.total_partidos} partidos vistos</span>
+              return (
+                <button
+                  key={comp.id}
+                  className="menu__grid-card animate-fade-in-up"
+                  style={{ animationDelay: `${index * 50}ms`, background: bgColor }}
+                  onClick={() => onSelectTournament(comp.id)}
+                >
+                  <div className="menu__grid-card-info">
+                    <h3 className="menu__grid-card-name">{comp.name}</h3>
+                    <p className="menu__grid-card-location">
+                      {comp.id === 'mundial2026' ? '🇺🇸 MX · CA' : '📍 ' + comp.name.split('-')[0].trim()}
                     </p>
                   </div>
 
-                  <div className="menu__tournament-progress">
-                    <CircularProgress percentage={percentage > 100 ? 100 : percentage} size={90} strokeWidth={6} />
+                  <div className="menu__grid-card-bottom">
+                    <div className="menu__grid-card-stats">
+                      <strong>{compWatchedCount}</strong> / {comp.total_partidos} vistos
+                    </div>
+                    <div style={{ marginLeft: '10px' }}>
+                      <CircularProgress 
+                        percentage={percentage > 100 ? 100 : percentage} 
+                        size={46} 
+                        strokeWidth={4.5}
+                        textColor="#111"
+                        trackColor="rgba(0,0,0,0.08)"
+                      />
+                    </div>
                   </div>
-                </div>
-
-                <div className="menu__tournament-arrow">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <polyline points="9 18 15 12 9 6" />
-                  </svg>
-                </div>
-              </button>
-            );
-          })
+                </button>
+              );
+            })}
+          </div>
         ) : (
           <div className="menu__empty-message animate-fade-in" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1.5rem', marginTop: '3rem' }}>
             <p style={{ margin: 0 }}>No hay competiciones {activeTab === 'en-curso' ? 'en curso' : 'finalizadas'}.</p>

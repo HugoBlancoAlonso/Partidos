@@ -45,7 +45,10 @@ export default function Explore({ competitions, followedIds, user, onFollowedCha
       
       <div className="menu__content">
         <p className="menu__desc animate-fade-in" style={{ marginBottom: '1.5rem', color: 'var(--text-secondary)', textAlign: 'center' }}>
-          Sigue las competiciones para que aparezcan en tu menú principal.
+          Sigue las competiciones para que aparezcan en tu menú principal.<br/>
+          <span style={{ display: 'inline-block', marginTop: '12px', background: 'rgba(16, 185, 129, 0.15)', border: '1px solid rgba(16, 185, 129, 0.4)', color: '#10b981', padding: '6px 14px', borderRadius: '20px', fontSize: '0.85rem', fontWeight: '600' }}>
+            🏆 {competitions.length} competiciones disponibles
+          </span>
         </p>
 
         {/* Buscador */}
