@@ -1,7 +1,5 @@
-- Añadir competiciones.
-- Crear script local para añadir competiciones.
 - Anuncios.
-- Añadir opcion de subir json desde la app y que se suba a la base de datos.
 - Estetica.
 - Crear dominio y enlazarlo a vercel.
 - Crea una página de "Política de Privacidad" y "Aviso Legal".
+- Modificar como se ven las competicioones en Mis Competiciones.

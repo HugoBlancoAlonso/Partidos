@@ -32,10 +32,6 @@ export default function MatchCard({ match, isWatched, onToggleWatched }) {
 
   const handleToggle = (e) => {
     e.stopPropagation();
-    if (!hasPassed) {
-      alert('¡Este partido todavía no se ha jugado! ⏳');
-      return;
-    }
     onToggleWatched(match.id);
   };
 
@@ -92,10 +88,9 @@ export default function MatchCard({ match, isWatched, onToggleWatched }) {
         <button
           className={`match-card__switch ${isWatched ? 'match-card__switch--on' : ''}`}
           onClick={handleToggle}
-          title={!hasPassed ? 'Aún no se ha jugado' : (isWatched ? 'Marcar como no visto' : 'Marcar como visto')}
+          title={isWatched ? 'Marcar como no visto' : 'Marcar como visto'}
           role="switch"
           aria-checked={isWatched}
-          disabled={!hasPassed}
         >
           <span className="match-card__switch-knob" />
         </button>

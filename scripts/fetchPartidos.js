@@ -34,7 +34,7 @@ const API_KEY = 'f864a9dfab7a485491b3c07959415400';
 // 'BL1' = Bundesliga Alemania
 // 'SA' = Serie A Italia
 // 'FL1' = Ligue 1 Francia
-const LEAGUE_CODE = 'PD';
+const LEAGUE_CODE = 'CL';
 const SEASON = 2026; // Año de inicio de la temporada (2024 es la temporada 2024/2025)
 
 // ==========================================

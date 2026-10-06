@@ -95,12 +95,35 @@ function App() {
   // Cargar datos de Supabase (Competiciones y Partidos)
   useEffect(() => {
     const loadDatabaseData = async () => {
-      const [{ data: comps }, { data: matches }] = await Promise.all([
-        supabase.from('competitions').select('*').order('start_date', { ascending: false }),
-        supabase.from('matches').select('*')
-      ]);
+      // Cargar competiciones
+      const { data: comps } = await supabase.from('competitions').select('*').order('start_date', { ascending: false });
+      
+      // Cargar TODOS los partidos saltándose el límite de 1000 de Supabase usando paginación
+      let allMatches = [];
+      let from = 0;
+      const step = 999;
+      let hasMore = true;
+
+      while (hasMore) {
+        const { data: chunk, error } = await supabase
+          .from('matches')
+          .select('*')
+          .range(from, from + step);
+        
+        if (error || !chunk || chunk.length === 0) {
+          hasMore = false;
+        } else {
+          allMatches = [...allMatches, ...chunk];
+          if (chunk.length < step + 1) {
+            hasMore = false;
+          } else {
+            from += step + 1;
+          }
+        }
+      }
+
       setDbCompetitions(comps || []);
-      setDbMatches(matches || []);
+      setDbMatches(allMatches);
       setDataLoading(false);
     };
     loadDatabaseData();
