@@ -1,6 +1,5 @@
 import { useState } from 'react';
-import { getFlagUrl, isRealTeam as isRealCountry } from '../data/countryFlags';
-import { getBadgeUrl, isRealTeam as isRealClub } from '../data/teamBadges';
+import { getFlagUrl, isRealCountry, getBadgeUrl, isRealClub } from '@partidos/core';
 import './MatchCard.css';
 
 export default function MatchCard({ match, isWatched, onToggleWatched }) {
