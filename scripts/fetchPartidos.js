@@ -42,7 +42,7 @@ const SEASON = 2026; // Año de inicio de la temporada (2024 es la temporada 202
 // ==========================================
 // Deja esto vacío '' para descargar toda la liga entera.
 // Si pones un nombre (ej: 'Madrid' o 'Barcelona'), solo bajará los partidos de ese equipo.
-const TEAM_FILTER = 'Real Madrid CF';
+const TEAM_FILTER = '';
 
 async function fetchMatches() {
   if (!API_KEY) {

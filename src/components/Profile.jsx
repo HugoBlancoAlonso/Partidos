@@ -1,6 +1,8 @@
+import { useNavigate } from 'react-router-dom';
 import './Menu.css';
 
 export default function Profile({ user, username, onLogout }) {
+  const navigate = useNavigate();
   const isAdmin = user?.role === 1;
 
   return (
@@ -21,6 +23,27 @@ export default function Profile({ user, username, onLogout }) {
         </p>
 
         <div style={{ flex: 1 }} />
+
+        {isAdmin && (
+          <button 
+            onClick={() => navigate('/admin/competitions')}
+            style={{
+              width: '100%',
+              padding: '16px',
+              backgroundColor: '#ffffff',
+              color: '#000000',
+              border: 'none',
+              borderRadius: '16px',
+              fontWeight: '600',
+              fontSize: '1rem',
+              cursor: 'pointer',
+              transition: 'all 0.2s ease',
+              marginBottom: '1rem'
+            }}
+          >
+            ⚙️ Añadir Competiciones (Admin)
+          </button>
+        )}
 
         <button 
           onClick={onLogout}

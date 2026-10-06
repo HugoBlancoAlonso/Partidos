@@ -3,3 +3,5 @@
 - Anuncios.
 - Añadir opcion de subir json desde la app y que se suba a la base de datos.
 - Estetica.
+- Crear dominio y enlazarlo a vercel.
+- Crea una página de "Política de Privacidad" y "Aviso Legal".
