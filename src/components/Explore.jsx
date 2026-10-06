@@ -32,9 +32,9 @@ export default function Explore({ competitions, followedIds, user, onFollowedCha
     setLoadingId(null);
   };
 
-  const filteredCompetitions = competitions.filter(comp => 
-    comp.name.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const filteredCompetitions = competitions
+    .filter(comp => comp.name.toLowerCase().includes(searchQuery.toLowerCase()))
+    .sort((a, b) => a.name.length - b.name.length);
 
   return (
     <div className="menu">
