@@ -9,6 +9,8 @@ import Layout from './components/Layout';
 import Explore from './components/Explore';
 import Profile from './components/Profile';
 import AdminCompetitions from './components/AdminCompetitions';
+import PrivacyPolicy from './components/PrivacyPolicy';
+import LegalNotice from './components/LegalNotice';
 import './App.css';
 
 // Componente Wrapper para extraer ID de la URL y renderizar MatchList
@@ -342,6 +344,8 @@ function App() {
         } 
       />
       
+      <Route path="/privacidad" element={<PrivacyPolicy />} />
+      <Route path="/aviso-legal" element={<LegalNotice />} />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );

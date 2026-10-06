@@ -1,5 +1,10 @@
 - Anuncios.
-- Estetica.
 - Crear dominio y enlazarlo a vercel.
-- Crea una página de "Política de Privacidad" y "Aviso Legal".
-- Modificar como se ven las competicioones en Mis Competiciones.
+- Desarrollar el perfil.
+- Posibilidad de segir a otros usuarios.
+- Añadir DNI y Dirección Fiscal en el Aviso Legal (cuando se monetice la app o se tenga SL).
+- Desarrollar estadísticas del perfil.
+  - Estadísticas globales: Número total de partidos vistos, ligas seguidas y porcentaje de "completado" global.
+  - Tu equipo más visto: (Si podemos calcular de qué equipo sueles ver más partidos).
+  - Rango o Nivel: Dependiendo de los partidos vistos, ponerle un rango (ej. "Aficionado", "Hooligan", "Mánager").
+  - Medallas o trofeos por logros específicos (ej. "Has visto 10 partidos de Champions", "Has seguido 5 ligas diferentes").
