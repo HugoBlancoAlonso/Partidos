@@ -6,11 +6,12 @@
 Esta aplicación web te permite llevar un registro de todos los partidos de fútbol que has visto en diferentes competiciones. Está desarrollada utilizando React y Vite en el frontend, y utiliza Supabase como backend para la autenticación de usuarios y el almacenamiento de datos.
 
 ## 📋 Por hacer (TODO)
-- Añadir competiciones.
-- Habilitar opción de poder seguir las competiciones que quieras.
-- Crear script local para añadir competiciones.
+*(Nota: Las tareas pendientes se encuentran detalladas en el archivo [`TODO.txt`](./TODO.txt))*
 - Anuncios.
-- Cuentas de admin, desarrollador, etc (privilegios).
+- Crear dominio y enlazarlo a vercel.
+- Posibilidad de seguir a otros usuarios.
+- Añadir DNI y Dirección Fiscal en el Aviso Legal (cuando se monetice la app o se tenga SL).
+- Desarrollar estadísticas del perfil (globales, equipo más visto, rango, medallas, etc.).
 
 ## ¿Cómo funciona la aplicación?
 
@@ -27,6 +28,15 @@ La aplicación se divide en las siguientes características principales:
 
 4. **Modo Claro / Oscuro:**
    La aplicación incluye un botón (generalmente un icono de sol/luna) para alternar entre el tema claro (Light Mode) y el tema oscuro (Dark Mode). Tu preferencia de tema se almacena en el navegador para mantenerse en tus futuras visitas.
+
+5. **Nuevas Competiciones y Script Local:**
+   Se ha ampliado el catálogo de competiciones disponibles y se han añadido scripts para facilitar la inserción de nuevos torneos.
+
+6. **Privilegios de Cuenta (Admin/Developer):**
+   Sistema de roles que otorga permisos especiales (como administrador) para gestionar el contenido de la plataforma.
+
+7. **Aviso Legal:**
+   Páginas informativas y legales preparadas para la futura monetización y regulación del sitio web.
 
 ---
 

@@ -1,6 +1,5 @@
 - Anuncios.
 - Crear dominio y enlazarlo a vercel.
-- Desarrollar el perfil.
 - Posibilidad de segir a otros usuarios.
 - Añadir DNI y Dirección Fiscal en el Aviso Legal (cuando se monetice la app o se tenga SL).
 - Desarrollar estadísticas del perfil.
