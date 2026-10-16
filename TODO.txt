@@ -7,3 +7,31 @@
   - Tu equipo más visto: (Si podemos calcular de qué equipo sueles ver más partidos).
   - Rango o Nivel: Dependiendo de los partidos vistos, ponerle un rango (ej. "Aficionado", "Hooligan", "Mánager").
   - Medallas o trofeos por logros específicos (ej. "Has visto 10 partidos de Champions", "Has seguido 5 ligas diferentes").
+
+- Siguientes pasos posibles:
+  - [HECHO] Escribir las políticas RLS (creado archivo supabase/rls_policies.sql listo para ejecutar en Supabase).
+  - Diseñar el nuevo esquema de datos (teams, parent_competition_id, team_filter).
+  - Refactorizar App.jsx en hooks (useAuth, useCompetitions, useTheme).
+
+- Tareas pendientes del análisis del repositorio (por prioridad):
+  - [YA - Urgente] Seguridad:
+    - [HECHO EN CÓDIGO] Eliminar scratch_test.js, mover clave a FOOTBALL_API_KEY en .env y crear .env.example (Pendiente por el usuario: regenerar/revocar la API key en football-data.org).
+    - [HECHO EN CÓDIGO] Auditar y blindar RLS: creadas políticas y triggers en supabase/rls_policies.sql (Pendiente por el usuario: ejecutar el script en el SQL Editor de Supabase).
+    - Planificar paso de emails ficticios (@mundial2026.app) a email real u OAuth (Google/Apple).
+  - [PRONTO] Bugs y lógica:
+    - [HECHO EN CÓDIGO] Añadir dist/ a .gitignore y limpiar del repositorio.
+    - [HECHO EN CÓDIGO] Reparar escudos rotos en public/badges/ (archivos con error "File not found").
+    - Corregir zona horaria en MatchCard (sustituir +02:00 fijo por Europe/Madrid con Intl o UTC).
+    - Definir y aplicar el comportamiento de toggle para partidos futuros.
+    - Corregir contraste en modo claro y nombres de variables CSS (--bg-main vs --bg-primary) en PrivacyPolicy y LegalNotice.
+    - Corregir condición en Menu.jsx (comp.id === 'mundial2026' vs UUIDs).
+    - Cargar partidos bajo demanda por competición (.eq('competition_id', id)) en vez de cargar todos al inicio.
+    - Sustituir alert() por componente Toast en useWatchedMatches.
+    - Mover ensureProfile al registro o trigger en Supabase.
+    - Calcular total_partidos dinámicamente en vez de almacenar total_matches desincronizado.
+  - [MEDIO PLAZO / CRECIMIENTO] Arquitectura y móvil:
+    - Unificar estilos (evitar mezcla de CSS, styled-components e inline styles).
+    - Migrar countryFlags.js y teamBadges.js a tabla teams en Supabase.
+    - Implementar PWA (manifest.json + vite-plugin-pwa) y evaluar Capacitor para app móvil.
+    - Evaluar TanStack Query, TypeScript y tests automatizados.
+    - Mejorar accesibilidad (aria-labels, viewport) y añadir aviso de cookies/consentimiento para Vercel Analytics.

@@ -24,8 +24,16 @@ function jsonToCsv(items) {
 // ==========================================
 // 1. CONFIGURACIÓN (FOOTBALL-DATA.ORG)
 // ==========================================
-// Regístrate en https://www.football-data.org/ para obtener tu API Token gratis
-const API_KEY = 'f864a9dfab7a485491b3c07959415400';
+// Cargar .env de forma nativa si estamos ejecutando con Node.js
+if (typeof process.loadEnvFile === 'function') {
+  try {
+    process.loadEnvFile();
+  } catch {
+    // Si no existe el archivo .env, continuará leyendo de process.env del sistema
+  }
+}
+
+const API_KEY = process.env.FOOTBALL_API_KEY || '';
 
 // Códigos de ligas gratis en esta API: 
 // 'PD' = Primera División España
@@ -46,7 +54,8 @@ const TEAM_FILTER = '';
 
 async function fetchMatches() {
   if (!API_KEY) {
-    console.error('❌ ERROR: Por favor, edita el archivo "scripts/fetchPartidos.js" y pon tu API_KEY de football-data.org.');
+    console.error('❌ ERROR: No se encontró la variable FOOTBALL_API_KEY en tu archivo .env ni en el entorno.');
+    console.error('👉 Añade FOOTBALL_API_KEY=tu_clave_aqui en tu archivo .env en la raíz del proyecto.');
     return;
   }
 
